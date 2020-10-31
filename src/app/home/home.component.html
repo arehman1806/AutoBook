@@ -1,1 +1,44 @@
-<p>home works!</p>
+<div
+  fxLayout="column"
+  fxLayoutAlign="center center">
+  <!--HEADING -->
+  <h1
+    class="mat-headline">
+    Create a new booking
+  </h1>
+
+  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit($event)" fxLayout="column">
+
+    <mat-form-field>
+      <mat-label>
+        Your pleasance user id
+      </mat-label>
+      <input type="text" matInput formControlName="uid">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>
+        Your pleasance password
+      </mat-label>
+
+      <input type="text" matInput formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" formControlName="date"
+             >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker [showSpinners]="true" [showSeconds]="false"
+                               [stepHour]="1" [stepMinute]="30" [stepSecond]="1"
+                               [touchUi]="true"
+                               [disableMinute]="false" [hideTime]="false">
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
+
+
+
+    <button mat-raised-button type="submit">Submit</button>
+
+  </form>
+
+</div>
