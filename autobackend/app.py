@@ -4,9 +4,10 @@ import time
 
 import pyautogui as pyautogui
 from flask import Flask
+from flask import request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.keys import Keys
+  from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -22,6 +23,8 @@ def booking(day, month, time_input):
 
     driver = webdriver.Chrome(chrome_driver, chrome_options=options)
 
+# For certificate skipping
+# Won't be a problem during dev
     def threaded_function():
         # Calls the website
         # driver.get('https://www.sport.ed.ac.uk/online-booking')
@@ -30,6 +33,8 @@ def booking(day, month, time_input):
     def threaded_function2():
         for i in range(0, 8):
             pyautogui.press('enter')
+
+# END certificate skipping
 
     # Calling the website and pressing 10 times in the same time
     thread2 = threading.Thread(target=threaded_function2)
@@ -136,6 +141,9 @@ def booking(day, month, time_input):
 
         results_table = driver.find_element_by_class_name("ActivitySearchResults")
         results_table = results_table.find_element_by_tag_name('tbody')
+
+
+
         results_table_rows = results_table.find_elements_by_tag_name("tr")
 
         for row in results_table_rows:
@@ -159,19 +167,13 @@ def booking(day, month, time_input):
 booking(3, 11, 9.5)
 app = Flask(__name__)
 
-from flask import request
-
-
 @app.route('/', methods=['GET'])
-def hello_world():
-    # day = request.args['day']
-    # month = request.args['month']
-    # time_input = request.args['time']
+def run_booking():
+    day = request.args['day']
+    month = request.args['month']
+    time_input = request.args['time']
 
-    #booking(day, month, time_input)
-    booking(3, 11, 9.5)
-
-    # return (day, month, time_input)
+    booking(day, month, time_input)
 
 
 if __name__ == '__main__':
