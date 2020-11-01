@@ -100,11 +100,9 @@ def booking(day, month, time_input, user_id, user_password):
 
   time.sleep(1)
 
-  #submit_query_button = driver.find_element_by_class_name("NavigationButton")
-  submit_query_button= driver.find_element_by_xpath("//input[@name='submitButton' and @value='Search']")
+  # submit_query_button = driver.find_element_by_class_name("NavigationButton")
+  submit_query_button = driver.find_element_by_xpath("//input[@name='submitButton' and @value='Search']")
   submit_query_button.click()
-
-
 
   time.sleep(6)
 
@@ -176,7 +174,7 @@ def run_booking():
   user_id = request.args['uid']
   user_password = request.args['password']
 
-  #testing account
+  # testing account
   if user_id == 'test':
     user_id = 'mnm-matin'
     user_password = '123*Jkljkljkl'
