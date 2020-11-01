@@ -1,6 +1,7 @@
 import os
 import threading
 import time
+from decimal import Decimal
 
 import pyautogui as pyautogui
 from flask import Flask
@@ -10,9 +11,9 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
 
 
-def booking(day, month, time_input):
-  USER_ID = 'mnm-matin'
-  USER_PASSWORD = '123*Jkljkljkl'
+def booking(day, month, time_input, user_id, user_password):
+  USER_ID = user_id
+  USER_PASSWORD = user_password
   options = Options()
   options.set_capability("acceptInsecureCerts", True)
 
@@ -61,8 +62,6 @@ def booking(day, month, time_input):
   activity.select_by_visible_text("Gym Access")
 
   def select_date(day_x, month_x):
-    day_x = int(day_x)
-    month_x = int(month_x)
     months_to_num = {
       'january': 1,
       'february': 2,
@@ -80,7 +79,7 @@ def booking(day, month, time_input):
     date = driver.find_element_by_id("SearchDate")
     date.click()
     count = 0
-    while months_to_num[driver.find_element_by_class_name('ui-datepicker-month').text.lower()] != month_x:
+    while int(months_to_num[driver.find_element_by_class_name('ui-datepicker-month').text.lower()]) != month_x:
       time.sleep(3)
       next_month = driver.find_element_by_class_name('ui-datepicker-next')
       next_month.click()
@@ -101,13 +100,15 @@ def booking(day, month, time_input):
 
   time.sleep(1)
 
-  submit_query_button = driver.find_element_by_class_name("NavigationButton")
+  #submit_query_button = driver.find_element_by_class_name("NavigationButton")
+  submit_query_button= driver.find_element_by_xpath("//input[@name='submitButton' and @value='Search']")
   submit_query_button.click()
+
+
 
   time.sleep(6)
 
   def basket(time_input_x):
-    time_input_x = int(time_input_x)
 
     def convert_time(time_x):
       split1 = time_x.split(' ')
@@ -135,7 +136,7 @@ def booking(day, month, time_input):
       if time_split == ['12', '30', 'PM']:
         number = 12.5
 
-      return number
+      return Decimal(number)
 
     results_table = driver.find_element_by_class_name("ActivitySearchResults")
     results_table = results_table.find_element_by_tag_name('tbody')
@@ -161,17 +162,26 @@ def booking(day, month, time_input):
   confirm = driver.find_element_by_link_text("Confirm your booking(s)")
 
 
-booking(3, 11, 9.5)
+booking(4, 11, 15.5, 'mnm-matin', '123*Jkljkljkl')
+
 app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
 def run_booking():
-  day = request.args['day']
-  month = request.args['month']
-  time_input = request.args['time']
+  day = int(request.args['day'])
+  month = int(request.args['month'])
+  time_input = Decimal(request.args['time'])
 
-  booking(day, month, time_input)
+  user_id = request.args['uid']
+  user_password = request.args['password']
+
+  #testing account
+  if user_id == 'test':
+    user_id = 'mnm-matin'
+    user_password = '123*Jkljkljkl'
+
+  booking(day, month, time_input, user_id, user_password)
 
 
 if __name__ == '__main__':
