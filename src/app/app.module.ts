@@ -14,11 +14,14 @@ import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from '@angular-material-components/datetime-picker';
+import { CalenderComponent } from './calender/calender.component';
+import { ScheduleModule, RecurrenceEditorModule } from '@syncfusion/ej2-angular-schedule';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    CalenderComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from '@angular-mater
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMatDatetimePickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    ScheduleModule, RecurrenceEditorModule,
   ],
   exports: [
     MatFormFieldModule,
