@@ -1,3 +1,4 @@
+import os
 import threading
 import time
 
@@ -16,8 +17,10 @@ def booking(day, month, time_input):
     options = Options()
     options.set_capability("acceptInsecureCerts", True)
 
-    driver = webdriver.Chrome(r"C:\Users\Matin\PycharmProjects\flaskProject\venv\driver\chromedriver.exe",
-                              chrome_options=options)
+    driver_dir = os.path.dirname(__file__)
+    chrome_driver = os.path.join(driver_dir, 'driver','chromedriver.exe')
+
+    driver = webdriver.Chrome(chrome_driver, chrome_options=options)
 
     def threaded_function():
         # Calls the website
@@ -153,25 +156,20 @@ def booking(day, month, time_input):
 
     confirm = driver.find_element_by_link_text("Confirm your booking(s)")
 
-
+booking(3, 11, 9.5)
 app = Flask(__name__)
 
 from flask import request
 
 
-@app.route('/query-example')
-def query_example():
-    return 'Todo...'
-
-
 @app.route('/', methods=['GET'])
 def hello_world():
-    day = request.args['day']
-    month = request.args['month']
-    time_input = request.args['time']
-    print((day, month, time_input))
+    # day = request.args['day']
+    # month = request.args['month']
+    # time_input = request.args['time']
 
-    booking(day, month, time_input)
+    #booking(day, month, time_input)
+    booking(3, 11, 9.5)
 
     # return (day, month, time_input)
 
