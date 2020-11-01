@@ -27,9 +27,9 @@ export class HomeComponent implements OnInit {
     const uid = this.bookingForm.value.uid;
     const password = this.bookingForm.value.password;
     const x = this.bookingForm.value.date as Date;
-    const day = x.getDay();
+    const day = x.getDate();
     console.log(x);
-    const month = x.getMonth();
+    const month = x.getMonth() + 1;
     const time = x.getHours() + (x.getMinutes() / 6000 ) * 100;
     const url = `http://127.0.0.1:5000/?uid=${uid}&password=${password}&day=${day}&month=${month}&time=${time}`;
     window.alert('You are being redirected to ' + url);

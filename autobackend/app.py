@@ -162,7 +162,7 @@ def booking(day, month, time_input, user_id, user_password):
   confirm = driver.find_element_by_link_text("Confirm your booking(s)")
 
 
-booking(4, 11, 15.5, 'mnm-matin', '123*Jkljkljkl')
+#booking(4, 11, 15.5, 'mnm-matin', '123*Jkljkljkl')
 
 app = Flask(__name__)
 
