@@ -7,9 +7,7 @@ from flask import Flask
 from flask import request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-  from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
-from selenium.webdriver.support.wait import WebDriverWait
 
 
 def booking(day, month, time_input):
