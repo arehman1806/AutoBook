@@ -1,8 +1,8 @@
 # AutoBook.Me
 Angular front-end
 
-todo:
-- integrate firebase
+AR:
+- firebase integrated.
 
 Matin:
 - I added the calender
