@@ -3,6 +3,8 @@ Angular front-end
 
 AR:
 - firebase integrated.
+- Auth Service started:
+    - First method for signup with email and password added
 
 Matin:
 - I added the calender
