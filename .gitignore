@@ -150,3 +150,6 @@ ENV/
 .idea/
 *.iml
 .DS_Store
+
+# dev
+environment.dev.ts
