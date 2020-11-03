@@ -1,8 +1,10 @@
 # AutoBook.Me
 Angular front-end
 
-todo:
-- integrate firebase
+AR:
+- firebase integrated.
+- Auth Service started:
+    - First method for signup with email and password added
 
 Matin:
 - I added the calender
