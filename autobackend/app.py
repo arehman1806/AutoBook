@@ -4,7 +4,7 @@ import time
 from decimal import Decimal
 
 import pyautogui as pyautogui
-from flask import Flask
+from flask import Flask, jsonify
 from flask import request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -180,6 +180,16 @@ def run_booking():
     user_password = '123*Jkljkljkl'
 
   booking(day, month, time_input, user_id, user_password)
+
+
+@app.route('/return_json')
+def send_json():
+  return jsonify(message='Sending Json')
+
+@app.route('/url_variables/<string:a>/<int:n>')
+def url_variables(a: str, n: int):
+  return jsonify(message='Using URL Variables %s and number %d' % (a, n))
+
 
 
 if __name__ == '__main__':
