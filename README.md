@@ -30,6 +30,7 @@ Back-end is in /autobackend directory
 
 Matin:
 - I watched the linkedin learning series and understand how we can make data available to front end.
+- See postman link sent to microsoft teams
 
 todo:
 - make data available to front-end
