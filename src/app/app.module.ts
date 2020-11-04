@@ -20,6 +20,11 @@ import {AngularFireModule} from '@angular/fire';
 import { environment } from 'environments/environment.dev';
 import {MatCardModule} from '@angular/material/card';
 
+// Matin commit
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+
 @NgModule({
   declarations: [
     AppComponent,
