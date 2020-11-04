@@ -17,7 +17,8 @@ import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from '@angular-mater
 import { CalenderComponent } from './calender/calender.component';
 import { ScheduleModule, RecurrenceEditorModule } from '@syncfusion/ej2-angular-schedule';
 import {AngularFireModule} from '@angular/fire';
-import { environment } from 'environments/environment'
+import { environment } from 'environments/environment.dev';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { environment } from 'environments/environment'
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     ScheduleModule, RecurrenceEditorModule,
-    AngularFireModule.initializeApp(environment)
+    AngularFireModule.initializeApp(environment),
+    MatCardModule
   ],
   exports: [
     MatFormFieldModule,
@@ -50,7 +52,8 @@ import { environment } from 'environments/environment'
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMatDatetimePickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

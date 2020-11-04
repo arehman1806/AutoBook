@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   }
 
 
-  onSubmit($event: Event) {
+  onSubmit($event: Event): void {
     const uid = this.bookingForm.value.uid;
     const password = this.bookingForm.value.password;
     const x = this.bookingForm.value.date as Date;
