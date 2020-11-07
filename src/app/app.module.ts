@@ -25,16 +25,11 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
-
-import {Auth}
-
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CalenderComponent,
-    MakeANewBookingComponent,
-    MakeANew0bookingComponent
+    CalenderComponent
   ],
   imports: [
     BrowserModule,
