@@ -14,45 +14,49 @@ from selenium.webdriver.support.select import Select
 def booking(day, month, time_input, user_id, user_password):
   USER_ID = user_id
   USER_PASSWORD = user_password
-  options = Options()
-  options.set_capability("acceptInsecureCerts", True)
 
-  driver_dir = os.path.dirname(__file__)
-  chrome_driver = os.path.join(driver_dir, 'driver', 'chromedriver.exe')
+  def initialize():
+    options = Options()
+    options.set_capability("acceptInsecureCerts", True)
 
-  driver = webdriver.Chrome(chrome_driver, chrome_options=options)
+    driver_dir = os.path.dirname(__file__)
+    chrome_driver = os.path.join(driver_dir, 'driver', 'chromedriver.exe')
 
-  # For certificate skipping
-  # Won't be a problem during dev
-  def threaded_function():
-    # Calls the website
-    # driver.get('https://www.sport.ed.ac.uk/online-booking')
+    driver = webdriver.Chrome(chrome_driver, chrome_options=options)
+
+    # For certificate skipping
+    # Won't be a problem during dev
+    def threaded_function():
+      # Calls the website
+      # driver.get('https://www.sport.ed.ac.uk/online-booking')
+      driver.get('https://www.sport.ed.ac.uk/online-booking/Account/LogOn')
+
+    def threaded_function2():
+      for i in range(0, 8):
+        pyautogui.press('enter')
+
+    # END certificate skipping
+
+    # Calling the website and pressing 10 times in the same time
+    thread2 = threading.Thread(target=threaded_function2)
+    thread2.start()
+
+    thread = threading.Thread(target=threaded_function)
+    thread.start()
+  def login(user_name, user_pass):
+    USER_ID = user_id
+    USER_PASSWORD = user_password
     driver.get('https://www.sport.ed.ac.uk/online-booking/Account/LogOn')
+    time.sleep(1)
+    username = driver.find_element_by_id('UserName')
+    username.click()
+    username.send_keys(USER_ID)
+    password = driver.find_element_by_id('Password')
+    password.click()
+    password.send_keys(USER_PASSWORD)
+    password.submit()
 
-  def threaded_function2():
-    for i in range(0, 8):
-      pyautogui.press('enter')
-
-  # END certificate skipping
-
-  # Calling the website and pressing 10 times in the same time
-  thread2 = threading.Thread(target=threaded_function2)
-  thread2.start()
-
-  thread = threading.Thread(target=threaded_function)
-  thread.start()
-
-  driver.get('https://www.sport.ed.ac.uk/online-booking/Account/LogOn')
-  time.sleep(1)
-  username = driver.find_element_by_id('UserName')
-  username.click()
-  username.send_keys(USER_ID)
-  password = driver.find_element_by_id('Password')
-  password.click()
-  password.send_keys(USER_PASSWORD)
-  password.submit()
-
-  time.sleep(2)
+    time.sleep(2)
 
   # driver.get('https://www.sport.ed.ac.uk/online-booking')
   site = Select(driver.find_element_by_id("SiteID"))
@@ -160,7 +164,7 @@ def booking(day, month, time_input, user_id, user_password):
   confirm = driver.find_element_by_link_text("Confirm your booking(s)")
 
 
-#booking(4, 11, 15.5, 'mnm-matin', '123*Jkljkljkl')
+# booking(4, 11, 15.5, 'mnm-matin', '123*Jkljkljkl')
 
 app = Flask(__name__)
 
@@ -186,10 +190,10 @@ def run_booking():
 def send_json():
   return jsonify(message='Sending Json')
 
+
 @app.route('/url_variables/<string:a>/<int:n>')
 def url_variables(a: str, n: int):
   return jsonify(message='Using URL Variables %s and number %d' % (a, n))
-
 
 
 if __name__ == '__main__':
