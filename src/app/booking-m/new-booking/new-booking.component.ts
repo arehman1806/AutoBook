@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {
   AgendaService,
   DayService,
@@ -16,7 +16,7 @@ import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
   templateUrl: './new-booking.component.html',
   styleUrls: ['./new-booking.component.scss']
 })
-export class NewBookingComponent implements OnInit {
+export class NewBookingComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
@@ -26,12 +26,19 @@ export class NewBookingComponent implements OnInit {
   @ViewChild('scheduleObj')
   public scheduleObj: ScheduleComponent;
 
+
   ngOnInit(): void {
-
   }
 
-  afterContentInit(): void {
-    this.scheduleObj.eventRendered.subscribe(x => {console.log(x); });
+  ngAfterViewInit(): void {
+    this.scheduleObj.actionBegin.subscribe(x => {
+      if (x.requestType === 'eventCreate') {
+        this.newBookings.push(x.data[0]);
+        console.log(this.newBookings);
+      }
+      // x.requestType can be eventChange or eventRemoved
+    });
   }
+
 
 }
