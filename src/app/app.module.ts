@@ -17,8 +17,10 @@ import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from '@angular-mater
 import { CalenderComponent } from './calender/calender.component';
 import { ScheduleModule, RecurrenceEditorModule } from '@syncfusion/ej2-angular-schedule';
 import {AngularFireModule} from '@angular/fire';
-import { environment } from 'environments/environment.dev';
+import { environment } from 'environments/environment';
 import {MatCardModule} from '@angular/material/card';
+import { MakeANewBookingComponent } from './make-a-new-booking/make-a-new-booking.component';
+import { MakeANew0bookingComponent } from './make-a-new0booking/make-a-new0booking.component';
 
 // Matin commit
 import * as firebase from 'firebase/app';
@@ -32,7 +34,9 @@ import {Auth}
   declarations: [
     AppComponent,
     HomeComponent,
-    CalenderComponent
+    CalenderComponent,
+    MakeANewBookingComponent,
+    MakeANew0bookingComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,13 @@ import {Auth}
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     ScheduleModule, RecurrenceEditorModule,
-    AngularFireModule.initializeApp(environment),
+    AngularFireModule.initializeApp({apiKey: 'AIzaSyBlfZNxYxqOrS7HrVJBK9kfCezS6r4-1Qo',
+      authDomain: 'autobook-e740b.firebaseapp.com',
+      databaseURL: 'https://autobook-e740b.firebaseio.com',
+      projectId: 'autobook-e740b',
+      storageBucket: 'autobook-e740b.appspot.com',
+      messagingSenderId: '919990050610',
+      appId: '1:919990050610:web:e6c56f256a75aeccd2412b'}),
     MatCardModule
   ],
   exports: [
