@@ -31,7 +31,7 @@ L10n.load({
 
 @Component({
   selector: 'app-new-booking',
-  template: `<ejs-schedule height="850" width="1250" [eventSettings] = "eventObject" [currentView] = "setView" [showQuickInfo]='showQuickInfo'>
+  template: `<ejs-schedule height="850" width="1250" [eventSettings] = "eventObject" [currentView] = "setView" (popupOpen)='onPopupOpen($event)' [showQuickInfo]='showQuickInfo'>
     <ng-template #editorTemplate let-data>
       <table class="custom-event-editor" width="100%" cellpadding="5">
         <tbody>
@@ -86,7 +86,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
 
   constructor() { }
   title = 'my-scheduler-app';
-  public dateParser(data: string){
+  public dateParser(data: String){
     return new Date(data);
   }
 
@@ -98,7 +98,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
   ]
   public setView: View = 'Week';
   public setDate: Date = new Date(2020, 10, 11);
-  public showQuickInfo: Boolean = true;
+  public showQuickInfo: Boolean = false;
   public eventObject: EventSettingsModel = {
     dataSource: [{
       Id: 1,
