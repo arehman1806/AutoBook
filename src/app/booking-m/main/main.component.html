@@ -1,1 +1,27 @@
-<p>main works!</p>
+<div
+  fxLayout="column">
+
+  <div
+    fxLayout="row wrap"
+    fxLayoutAlign="center center"
+    *ngIf="platforms$ | async as platforms">
+
+    <mat-card
+      *ngFor="let platform of platforms">
+
+      <mat-card-header>
+        <div mat-card-avatar ><img style="width: 50px; height: 50px" src="{{platform.icon}}"></div>
+        <mat-card-title>{{platform.name}}</mat-card-title>
+        <mat-card-subtitle>{{platform.openingHours}}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-actions>
+        <button mat-raised-button (click)="gotoBooking(platform.id)">BOOK</button>
+        <button mat-raised-button>CONNECT</button>
+      </mat-card-actions>
+
+    </mat-card>
+
+  </div>
+
+</div>

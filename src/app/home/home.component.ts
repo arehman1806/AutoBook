@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../services/Auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private auth: AuthService) { }
 
   ngOnInit(): void {
     this.bookingForm = this.fb.group({
@@ -35,5 +37,9 @@ export class HomeComponent implements OnInit {
     window.alert('You are being redirected to ' + url);
     this.http.get(url).subscribe(x => {console.log(x); }, y => {console.log(y); });
     window.alert('you should have been redirected');
+  }
+
+  authWithGoogle(): void {
+    this.auth.loginWithGoogle();
   }
 }

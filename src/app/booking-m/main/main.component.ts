@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {PlatformService} from '../../services/platform/platform.service';
+import {Platform} from '../../shared/platform';
+import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -7,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  platforms$: Observable<Platform[]>;
+  constructor(private platformService: PlatformService,
+              private router: Router) { }
 
   ngOnInit(): void {
+    this.platforms$ = this.platformService.fetchPlatforms();
   }
 
+
+  gotoBooking(id: string) {
+    this.router.navigate(['booking/new-booking', id]);
+  }
 }
