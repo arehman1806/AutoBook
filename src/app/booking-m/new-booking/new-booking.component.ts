@@ -10,6 +10,8 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import {$e} from 'codelyzer/angular/styles/chars';
 import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
+import {AuthService} from '../../services/Auth/auth.service';
+import {BookingService} from '../../services/booking.service';
 
 @Component({
   selector: 'app-new-booking',
@@ -18,7 +20,8 @@ import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
 })
 export class NewBookingComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
+  constructor(private auth: AuthService,
+              private bookingService: BookingService) { }
 
   dateTodisplay = new Date(2020, 10, 11);
   newBookings = [];
@@ -36,6 +39,13 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
       if (x.requestType === 'eventCreate') {
         this.newBookings.push(x.data[0]);
         console.log(this.newBookings);
+        this.auth.user$.subscribe(
+          (user) => {
+            if (user) {
+              this.bookingService.addNewBooking(x.data[0], user.uid);
+            }
+          }
+        );
       }
       // x.requestType can be eventChange or eventRemoved
     });

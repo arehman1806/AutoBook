@@ -6,6 +6,8 @@ import auth from 'firebase/app';
   providedIn: 'root'
 })
 export class AuthService {
+
+  user$ = this.afAuth.user;
   constructor(private afAuth: AngularFireAuth) { }
 
   // tslint:disable-next-line:typedef
