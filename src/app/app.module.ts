@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppCompgit puonent } from './app.component';
+import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
@@ -19,8 +19,6 @@ import { ScheduleModule, RecurrenceEditorModule } from '@syncfusion/ej2-angular-
 import {AngularFireModule} from '@angular/fire';
 import { environment } from 'environments/environment';
 import {MatCardModule} from '@angular/material/card';
-import { MakeANewBookingComponent } from './make-a-new-booking/make-a-new-booking.component';
-import { MakeANew0bookingComponent } from './make-a-new0booking/make-a-new0booking.component';
 
 // Matin commit
 import * as firebase from 'firebase/app';
