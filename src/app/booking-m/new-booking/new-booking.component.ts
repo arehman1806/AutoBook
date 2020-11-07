@@ -15,6 +15,8 @@ import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns'
 import { DateTimePickerModule } from '@syncfusion/ej2-angular-calendars'
 import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
 import { L10n } from '@syncfusion/ej2-base'
+import {AuthService} from '../../services/Auth/auth.service';
+import {BookingService} from '../../services/booking.service';
 
 L10n.load({
   'en-US': {
@@ -84,7 +86,8 @@ L10n.load({
 })
 export class NewBookingComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
+  constructor(private auth: AuthService,
+              private bookingService: BookingService) { }
   title = 'my-scheduler-app';
   public dateParser(data: string){
     return new Date(data);
@@ -125,10 +128,16 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
       if (x.requestType === 'eventCreate') {
         this.newBookings.push(x.data[0]);
         console.log(this.newBookings);
+        this.auth.user$.subscribe(
+          (user) => {
+            if (user) {
+              this.bookingService.addNewBooking(x.data[0], user.uid);
+            }
+          }
+        );
       }
       // x.requestType can be eventChange or eventRemoved
     });
   }
-
 
 }
