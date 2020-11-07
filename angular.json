@@ -28,9 +28,9 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@syncfusion/ej2-material-theme/styles/material.css",
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "src/styles.scss",
-              "./node_modules/@syncfusion/ej2-material-theme/styles/material.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
