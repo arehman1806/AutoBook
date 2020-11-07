@@ -25,7 +25,7 @@ Matin:
 -for now we'll just keep it like that tho
 
 
-# AutoBackEndgit add 
+# AutoBackEnd
 Back-end is in /autobackend directory
 
 Matin:
