@@ -76,6 +76,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
 
+
   ngAfterViewInit(): void {
     this.scheduleObj.actionBegin.subscribe(x => {
       if (x.requestType === 'eventCreate') {
