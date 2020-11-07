@@ -16,6 +16,8 @@ import {
   WeekService,
   WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
+import {DropDownListModule} from "@syncfusion/ej2-angular-dropdowns";
+import {DateTimePickerModule} from "@syncfusion/ej2-angular-calendars";
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import {
     FlexModule,
     MatCardModule,
     MatButtonModule,
-    ScheduleModule
+    ScheduleModule,
+    DropDownListModule,
+    DateTimePickerModule
   ],
   providers: [DayService,
     WeekService,
