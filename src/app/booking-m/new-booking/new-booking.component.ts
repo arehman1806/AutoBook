@@ -33,7 +33,7 @@ L10n.load({
 
 @Component({
   selector: 'app-new-booking',
-  template: `<ejs-schedule #scheduleObj height="850" width="1250" [eventSettings] = "eventObject" [currentView] = "setView" [showQuickInfo]='showQuickInfo'>
+  template: `<ejs-schedule #scheduleObj height="850" width="1250" [eventSettings] = "eventObject" [currentView] = "setView" [showQuickInfo]='showQuickInfo'  (popupOpen)='onPopupOpen($event)'>
     <ng-template #editorTemplate let-data>
       <table class="custom-event-editor" width="100%" cellpadding="5">
         <tbody>
@@ -138,6 +138,16 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
       }
       // x.requestType can be eventChange or eventRemoved
     });
+  }
+
+  public onPopupOpen(args: PopupOpenEventArgs): void {
+    if (args.type === 'QuickInfo') {
+      // @ts-ignore
+      const dialogObj = args.element.ej2_instances[0];
+      dialogObj.hide();
+      const currentAction = args.target.classList.contains("e-work-cells") ? "Add" : "Save";
+      this.scheduleObj.openEditor(args.data, currentAction);
+    }
   }
 
 }
