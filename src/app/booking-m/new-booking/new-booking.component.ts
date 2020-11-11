@@ -33,14 +33,14 @@ L10n.load({
 
 @Component({
   selector: 'app-new-booking',
-  template: `<ejs-schedule height="850" width="1250" [eventSettings] = "eventObject" [currentView] = "setView" [showQuickInfo]='showQuickInfo'>
+  template: `<ejs-schedule height="850" width="1250" [eventSettings] = "eventObject" [currentView] = "setView" [showQuickInfo]='showQuickInfo' (popupOpen)='onPopupOpen($event)'>
     <ng-template #editorTemplate let-data>
       <table class="custom-event-editor" width="100%" cellpadding="5">
         <tbody>
             <tr>
               <td class="e-textlabel">Summary</td>
               <td colspan="4">
-                // must have e-field and data-name="Form fields from Data Source"
+<!--                // must have e-field and data-name="Form fields from Data Source"-->
                 <input id="Subject" class="e-field e-input" type="text" value="{{data.Subject}}" data-name="Subject" style="width: 100%" />
               </td>
             </tr>
@@ -101,13 +101,24 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
   ]
   public setView: View = 'Week';
   public setDate: Date = new Date(2020, 10, 11);
-  public showQuickInfo: Boolean = true;
+  public showQuickInfo: Boolean = false;
+
+  public onPopupOpen(args: PopupOpenEventArgs): void {
+    if (args.type == "QuickInfo") {
+      // @ts-ignore
+      const dialogObj = args.element.ej2_instances[0];
+      dialogObj.hide();
+      const currentAction = args.target.classList.contains("e-work-cells") ? "Add" : "Save";
+      this.scheduleObj.openEditor(args.data, currentAction);
+    }
+  }
+
   public eventObject: EventSettingsModel = {
     dataSource: [{
       Id: 1,
       Subject: "Meditation Time",
-      StartTime: new Date(2020,10,11),
-      EndTime: new Date(2020,10,11),
+      StartTime: new Date(2020,11,11),
+      EndTime: new Date(2020,11,11),
       Location: "At Yoga Center"
     }]
   }
