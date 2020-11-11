@@ -57,7 +57,7 @@ L10n.load({
               <td class="e-textlabel">From</td>
               <td colspan="4">
                 <ejs-datetimepicker id="StartTime" class="e-field" data-name="StartTime"
-                                    format="M/dd/yy h:mm a" [value]="dateParser(data.startTime || data.StartTime)">
+                                    format="dd/M/yy h:mm a" [value]="dateParser(data.startTime || data.StartTime)">
                 </ejs-datetimepicker>
               </td>
             </tr>
