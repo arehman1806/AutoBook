@@ -38,17 +38,18 @@ L10n.load({
       <table class="custom-event-editor" width="100%" cellpadding="5">
         <tbody>
             <tr>
-              <td class="e-textlabel">Summary</td>
+              <td class="e-textlabel">Site</td>
               <td colspan="4">
-                // must have e-field and data-name="Form fields from Data Source"
-                <input id="Subject" class="e-field e-input" type="text" value="{{data.Subject}}" data-name="Subject" style="width: 100%" />
+                <ejs-dropdownlist id='Site' class="e-field" data-name="Site" placeholder='Choose Site'
+                                  [dataSource]='SiteData' [fields]='SiteFields' value='{{data.Site}}'>
+                </ejs-dropdownlist>
               </td>
             </tr>
             <tr>
-              <td class="e-textlabel">Status</td>
+              <td class="e-textlabel">Activity</td>
               <td colspan="4">
-                <ejs-dropdownlist id='Status' class="e-field" data-name="Status" placeholder='Choose Status'
-                                  [dataSource]='StatusData' [fields]='StatusFields' value='{{data.Status}}'>
+                <ejs-dropdownlist id='Activity' class="e-field" data-name="Activity" placeholder='Choose Acitivity'
+                                  [dataSource]='ActivityData' [fields]='ActivityFields' value='{{data.Activity}}'>
                 </ejs-dropdownlist>
               </td>
             </tr>
@@ -66,13 +67,21 @@ L10n.load({
                 <ejs-datetimepicker id="EndTime" class="e-field" data-name="EndTime" format="M/dd/yy h:mm a"
                                     [value]='dateParser(data.endTime || data.EndTime)'></ejs-datetimepicker>
               </td>
-            </tr>
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="e-textlabel">Reason</td>-->
+<!--              <td colspan="4">-->
+<!--                            <textarea id="Description" class="e-field e-input" name="Description" rows="3" cols="50"-->
+<!--                                      value="{{data.Description}}"-->
+<!--                                      style="width: 100%; height: 60px !important; resize: vertical"></textarea>-->
+<!--              </td>-->
+<!--            </tr>-->
             <tr>
-              <td class="e-textlabel">Reason</td>
+              <td class="e-textlabel">Activity</td>
               <td colspan="4">
-                            <textarea id="Description" class="e-field e-input" name="Description" rows="3" cols="50"
-                                      value="{{data.Description}}"
-                                      style="width: 100%; height: 60px !important; resize: vertical"></textarea>
+                <ejs-dropdownlist id='Duration' class="e-field" data-name="Duration" placeholder='Choose Arrival Window Duration'
+                                  [dataSource]='DurationData' [fields]='DurationFields' value='{{data.Duration}}'>
+                </ejs-dropdownlist>
               </td>
             </tr>
         </tbody>
@@ -90,12 +99,25 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
               private bookingService: BookingService) { }
   title = 'my-scheduler-app';
 
-  StatusFields: object = { text: 'StatusText', value: 'StatusText'};
-  StatusData: object  = [
-    { StatusText: 'New'},
-    { StatusText: 'Requested'},
-    { StatusText: 'Confirmed'}
+  SiteFields: object = { text: 'SiteText', value: 'SiteText'};
+  SiteData: object  = [
+    { SiteText: 'Easter Bush'},
+    { SiteText: 'Pleasance Sports Centre'}
   ];
+
+  ActivityFields: object = { text: 'ActivityText', value: 'ActivityText'};
+  ActivityData: object  = [
+    { ActivityText: 'Gym Access'},
+    { ActivityText: 'Climbing'},
+    { ActivityText: 'Lane Swimming'}
+  ];
+
+  DurationFields: object = { text: 'DurationText', value: 'DurationText'};
+  DurationData: object  = [
+    { DurationText: '30 minutes'}
+  ];
+
+
   setView: View = 'Week';
   setDate: Date = new Date(2020, 10, 11);
   showQuickInfo = true;
