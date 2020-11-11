@@ -17,6 +17,8 @@ import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
 import { L10n } from '@syncfusion/ej2-base';
 import {AuthService} from '../../services/Auth/auth.service';
 import {BookingService} from '../../services/booking.service';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 L10n.load({
   'en-US': {
@@ -94,9 +96,13 @@ L10n.load({
   styleUrls: ['./new-booking.component.scss']
 })
 export class NewBookingComponent implements OnInit, AfterViewInit {
+  public fetchedBookings: any[];
 
   constructor(private auth: AuthService,
-              private bookingService: BookingService) { }
+              private bookingService: BookingService,
+              private afAuth: AngularFireAuth,
+              private afStore: AngularFirestore) {
+  }
   title = 'my-scheduler-app';
 
   SiteFields: object = { text: 'SiteText', value: 'SiteText'};
@@ -122,17 +128,12 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
   setDate: Date = new Date(2020, 10, 11);
   showQuickInfo = true;
   eventObject: EventSettingsModel = {
-    dataSource: [{
-      Id: 1,
-      Subject: 'Meditation Time',
-      StartTime: new Date(2020, 10, 11),
-      EndTime: new Date(2020, 10, 11),
-      Location: 'At Yoga Center'
-    }]
+    dataSource: []
   };
 
 
   newBookings = [];
+  loading = true;
 
   @ViewChild('scheduleObj')
   scheduleObj: ScheduleComponent;
@@ -142,17 +143,45 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+
+    this.afAuth.user.subscribe(
+      (user) => {
+        if (user) {
+          this.afStore.collection(`users/${user.uid}/bookings`).get().subscribe(
+            (resp) => {
+              const bookingsFetched = [];
+              resp.forEach(
+                (document) => {
+                  const x = document.data();
+                  const endTime = x.EndTime.seconds.toString() + '000';
+                  const srtTime = x.StartTime.seconds.toString() + '000';
+                  x.StartTime = new Date(parseInt(srtTime));
+                  x.EndTime = new Date(parseInt(endTime));
+                  bookingsFetched.push(x);
+                }
+              );
+              this.scheduleObj.eventSettings.dataSource = bookingsFetched;
+              this.fetchedBookings = bookingsFetched;
+              this.loading = false;
+            }
+          );
+        }
+      }
+    );
+
   }
+
 
 
   ngAfterViewInit(): void {
     this.scheduleObj.actionBegin.subscribe(x => {
       if (x.requestType === 'eventCreate') {
         this.newBookings.push(x.data[0]);
-        console.log(this.newBookings);
         this.auth.user$.subscribe(
           (user) => {
             if (user) {
+              delete x.data[0].RecurrenceRule;
+              console.log(x.data[0]);
               this.bookingService.addNewBooking(x.data[0], user.uid);
             }
           }
@@ -167,7 +196,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
       // @ts-ignore
       const dialogObj = args.element.ej2_instances[0];
       dialogObj.hide();
-      const currentAction = args.target.classList.contains('e-work-cells') ? "Add" : "Save";
+      const currentAction = args.target.classList.contains('e-work-cells') ? 'Add' : 'Save';
       this.scheduleObj.openEditor(args.data, currentAction);
     }
     if (args.type == 'Editor') {
