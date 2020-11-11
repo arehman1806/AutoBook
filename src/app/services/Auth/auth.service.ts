@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import 'firebase/auth';
 import auth from 'firebase/app';
+import {UserProfile} from '../../shared/UserProfile';
+import {AngularFirestore} from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
   user$ = this.afAuth.user;
-  constructor(private afAuth: AngularFireAuth) { }
+
+  constructor(private afAuth: AngularFireAuth,
+              private afStore: AngularFirestore) {
+  }
 
   // tslint:disable-next-line:typedef
   createUserWithEmailAndPassword(email: string, password: string) {
@@ -18,7 +23,9 @@ export class AuthService {
           x => {
             window.alert('Success!');
           }
-        ).catch(x => {window.alert('User created but can not send verification email')});
+        ).catch(x => {
+          window.alert('User created but can not send verification email')
+        });
       }
     ).catch(
       (x) => {
@@ -26,11 +33,21 @@ export class AuthService {
       }
     );
   }
-  async loginWithGoogle(): Promise<void> {
+
+  loginWithGoogle(): Promise<void> {
     const provider = new auth.auth.GoogleAuthProvider();
-    await this.afAuth.signInWithPopup(provider).then((result) => {
-      const s = result.additionalUserInfo;
-      console.log(s);
+    return this.afAuth.signInWithPopup(provider).then((result) => {
+      if (result.additionalUserInfo.isNewUser && result) {
+        const profileFromFirebase = result.user;
+        const s: UserProfile = {
+          displayName: profileFromFirebase.displayName,
+          email: profileFromFirebase.email,
+          uid: profileFromFirebase.uid
+        };
+        return this.afStore.doc(`users/${profileFromFirebase.uid}`).set(s);
+      }
+      console.log(result);
     });
   }
 }
+
