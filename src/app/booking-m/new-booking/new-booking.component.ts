@@ -170,6 +170,9 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
       const currentAction = args.target.classList.contains('e-work-cells') ? "Add" : "Save";
       this.scheduleObj.openEditor(args.data, currentAction);
     }
+    if (args.type == 'Editor') {
+      (<any>this.scheduleObj.eventWindow).recurrenceEditor.frequencies = ['daily', 'weekly'];
+    }
   }
 
 }
