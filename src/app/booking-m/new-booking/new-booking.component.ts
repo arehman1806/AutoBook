@@ -145,7 +145,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
       // @ts-ignore
       const dialogObj = args.element.ej2_instances[0];
       dialogObj.hide();
-      const currentAction = args.target.classList.contains("e-work-cells") ? "Add" : "Save";
+      const currentAction = args.target.classList.contains('e-work-cells') ? "Add" : "Save";
       this.scheduleObj.openEditor(args.data, currentAction);
     }
   }
