@@ -11,20 +11,20 @@ import {
   EventSettingsModel,
   PopupOpenEventArgs
 } from '@syncfusion/ej2-angular-schedule';
-import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns'
-import { DateTimePickerModule } from '@syncfusion/ej2-angular-calendars'
+import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
+import { DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
 import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
-import { L10n } from '@syncfusion/ej2-base'
+import { L10n } from '@syncfusion/ej2-base';
 import {AuthService} from '../../services/Auth/auth.service';
 import {BookingService} from '../../services/booking.service';
 
 L10n.load({
   'en-US': {
-    'schedule': {
-      'addTitle' : 'New Title',
-      'saveButton' : 'Book Slots',
-      'cancelButton' : 'Cancel Booking',
-      'newEvent' : 'Add Booking Slots'
+    schedule: {
+      addTitle : 'New Title',
+      saveButton : 'Book Slots',
+      cancelButton : 'Cancel Booking',
+      newEvent : 'Add Booking Slots'
     }
   }
 });
@@ -89,17 +89,14 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
   constructor(private auth: AuthService,
               private bookingService: BookingService) { }
   title = 'my-scheduler-app';
-  public dateParser(data: string){
-    return new Date(data);
-  }
 
-  public StatusFields: Object = { text: 'StatusText', value: 'StatusText'};
-  public StatusData: Object  = [
+  StatusFields: object = { text: 'StatusText', value: 'StatusText'};
+  StatusData: object  = [
     { StatusText: 'New'},
     { StatusText: 'Requested'},
     { StatusText: 'Confirmed'}
-  ]
-  public setView: View = 'Week';
+  ];
+  setView: View = 'Week';
   public setDate: Date = new Date(2020, 10, 11);
   public showQuickInfo: Boolean = false;
 
@@ -120,14 +117,16 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
       StartTime: new Date(2020,11,11),
       EndTime: new Date(2020,11,11),
       Location: "At Yoga Center"
-    }]
-  }
+  };
 
 
   newBookings = [];
 
   @ViewChild('scheduleObj')
   public scheduleObj: ScheduleComponent;
+  public dateParser(data: string){
+    return new Date(data);
+  }
 
 
   ngOnInit(): void {
