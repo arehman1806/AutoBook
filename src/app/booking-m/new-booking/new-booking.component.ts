@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterContentChecked, AfterContentInit, AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {
   View,
   AgendaService,
@@ -33,7 +33,7 @@ L10n.load({
 
 @Component({
   selector: 'app-new-booking',
-  template: `<ejs-schedule height="850" width="1250" [eventSettings] = "eventObject" [currentView] = "setView" [showQuickInfo]='showQuickInfo'>
+  template: `<ejs-schedule #scheduleObj height="850" width="1250" [eventSettings] = "eventObject" [currentView] = "setView" [showQuickInfo]='showQuickInfo'>
     <ng-template #editorTemplate let-data>
       <table class="custom-event-editor" width="100%" cellpadding="5">
         <tbody>
@@ -97,9 +97,9 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
     { StatusText: 'Confirmed'}
   ];
   setView: View = 'Week';
-  public setDate: Date = new Date(2020, 10, 11);
-  public showQuickInfo = true;
-  public eventObject: EventSettingsModel = {
+  setDate: Date = new Date(2020, 10, 11);
+  showQuickInfo = true;
+  eventObject: EventSettingsModel = {
     dataSource: [{
       Id: 1,
       Subject: 'Meditation Time',
@@ -113,8 +113,8 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
   newBookings = [];
 
   @ViewChild('scheduleObj')
-  public scheduleObj: ScheduleComponent;
-  public dateParser(data: string){
+  scheduleObj: ScheduleComponent;
+  dateParser(data: string): any{
     return new Date(data);
   }
 
