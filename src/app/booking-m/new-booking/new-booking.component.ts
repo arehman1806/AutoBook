@@ -77,7 +77,7 @@ L10n.load({
 <!--              </td>-->
 <!--            </tr>-->
             <tr>
-              <td class="e-textlabel">Activity</td>
+              <td class="e-textlabel">Duration</td>
               <td colspan="4">
                 <ejs-dropdownlist id='Duration' class="e-field" data-name="Duration" placeholder='Choose Arrival Window Duration'
                                   [dataSource]='DurationData' [fields]='DurationFields' value='{{data.Duration}}'>
