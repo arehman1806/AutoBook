@@ -17,6 +17,8 @@ import {ScheduleComponent} from '@syncfusion/ej2-angular-schedule';
 import { L10n } from '@syncfusion/ej2-base';
 import {AuthService} from '../../services/Auth/auth.service';
 import {BookingService} from '../../services/booking.service';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 L10n.load({
   'en-US': {
@@ -87,7 +89,28 @@ L10n.load({
 export class NewBookingComponent implements OnInit, AfterViewInit {
 
   constructor(private auth: AuthService,
-              private bookingService: BookingService) { }
+              private bookingService: BookingService,
+              private afAuth: AngularFireAuth,
+              private afStore: AngularFirestore) {
+    this.afAuth.user.subscribe(
+      (user) => {
+        if (user) {
+          this.afStore.collection(`users/${user.uid}/bookings`).get().subscribe(
+            (resp) => {
+              const bookingsFetched = [];
+              resp.forEach(
+                (document) => {
+                  bookingsFetched.push(document.data());
+                }
+              );
+              console.log(bookingsFetched);
+              this.eventObject.dataSource = bookingsFetched;
+            }
+          );
+        }
+      }
+    );
+  }
   title = 'my-scheduler-app';
 
   StatusFields: object = { text: 'StatusText', value: 'StatusText'};
@@ -100,17 +123,12 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
   setDate: Date = new Date(2020, 10, 11);
   showQuickInfo = true;
   eventObject: EventSettingsModel = {
-    dataSource: [{
-      Id: 1,
-      Subject: 'Meditation Time',
-      StartTime: new Date(2020, 10, 11),
-      EndTime: new Date(2020, 10, 11),
-      Location: 'At Yoga Center'
-    }]
+    dataSource: []
   };
 
 
   newBookings = [];
+  loading = true;
 
   @ViewChild('scheduleObj')
   scheduleObj: ScheduleComponent;
@@ -120,7 +138,9 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+
   }
+
 
 
   ngAfterViewInit(): void {
