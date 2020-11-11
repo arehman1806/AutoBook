@@ -7,3 +7,6 @@ app = firebase_admin.initialize_app(cred)
 
 firestore_client = firebase_admin.firestore.client()
 firestore_client
+
+
+
