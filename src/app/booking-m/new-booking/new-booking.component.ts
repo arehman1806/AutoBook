@@ -96,29 +96,12 @@ L10n.load({
   styleUrls: ['./new-booking.component.scss']
 })
 export class NewBookingComponent implements OnInit, AfterViewInit {
+  public fetchedBookings: any[];
 
   constructor(private auth: AuthService,
               private bookingService: BookingService,
               private afAuth: AngularFireAuth,
               private afStore: AngularFirestore) {
-    this.afAuth.user.subscribe(
-      (user) => {
-        if (user) {
-          this.afStore.collection(`users/${user.uid}/bookings`).get().subscribe(
-            (resp) => {
-              const bookingsFetched = [];
-              resp.forEach(
-                (document) => {
-                  bookingsFetched.push(document.data());
-                }
-              );
-              console.log(bookingsFetched);
-              this.eventObject.dataSource = bookingsFetched;
-            }
-          );
-        }
-      }
-    );
   }
   title = 'my-scheduler-app';
 
@@ -161,6 +144,31 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
+    this.afAuth.user.subscribe(
+      (user) => {
+        if (user) {
+          this.afStore.collection(`users/${user.uid}/bookings`).get().subscribe(
+            (resp) => {
+              const bookingsFetched = [];
+              resp.forEach(
+                (document) => {
+                  const x = document.data();
+                  const endTime = x.EndTime.seconds.toString() + '000';
+                  const srtTime = x.StartTime.seconds.toString() + '000';
+                  x.StartTime = new Date(parseInt(srtTime));
+                  x.EndTime = new Date(parseInt(endTime));
+                  bookingsFetched.push(x);
+                }
+              );
+              this.scheduleObj.eventSettings.dataSource = bookingsFetched;
+              this.fetchedBookings = bookingsFetched;
+              this.loading = false;
+            }
+          );
+        }
+      }
+    );
+
   }
 
 
@@ -169,10 +177,11 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
     this.scheduleObj.actionBegin.subscribe(x => {
       if (x.requestType === 'eventCreate') {
         this.newBookings.push(x.data[0]);
-        console.log(this.newBookings);
         this.auth.user$.subscribe(
           (user) => {
             if (user) {
+              delete x.data[0].RecurrenceRule;
+              console.log(x.data[0]);
               this.bookingService.addNewBooking(x.data[0], user.uid);
             }
           }
@@ -187,7 +196,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
       // @ts-ignore
       const dialogObj = args.element.ej2_instances[0];
       dialogObj.hide();
-      const currentAction = args.target.classList.contains('e-work-cells') ? "Add" : "Save";
+      const currentAction = args.target.classList.contains('e-work-cells') ? 'Add' : 'Save';
       this.scheduleObj.openEditor(args.data, currentAction);
     }
   }
