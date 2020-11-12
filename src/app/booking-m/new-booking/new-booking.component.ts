@@ -170,7 +170,6 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
         }
       }
     );
-
   }
 
 
@@ -187,7 +186,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
               const docID = Date.now()
               this.bookingService.addNewBooking(x.data[0], user.uid, docID).then(
                 z => {
-                  this.http.post(`http://localhost:5000/new-booking`, {uid: user.uid, docID: docID}).subscribe(
+                  this.http.get(`http://localhost:5000/new-booking/${user.uid}/${docID}`).subscribe(
                     y => {
                       console.log(y);
                     }
