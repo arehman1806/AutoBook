@@ -15,8 +15,11 @@ export class BookingService {
 
     }
 
-  addNewBooking(bookingObject, uid): Promise<any> {
-    return this.afStore.doc(`users/${uid}/bookings/${Date.now().toString()}`).set(bookingObject)
+  addNewBooking(bookingObject, uid, docID): Promise<void> {
+    return this.afStore.doc(`users/${uid}/bookings/${docID}`).set(bookingObject).then(
+    );
   }
+
+
 
 }

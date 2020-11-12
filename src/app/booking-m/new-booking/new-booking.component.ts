@@ -19,6 +19,7 @@ import {AuthService} from '../../services/Auth/auth.service';
 import {BookingService} from '../../services/booking.service';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {HttpClient} from '@angular/common/http';
 
 L10n.load({
   'en-US': {
@@ -101,7 +102,8 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
   constructor(private auth: AuthService,
               private bookingService: BookingService,
               private afAuth: AngularFireAuth,
-              private afStore: AngularFirestore) {
+              private afStore: AngularFirestore,
+              private http: HttpClient) {
   }
   title = 'my-scheduler-app';
 
@@ -182,7 +184,16 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
             if (user) {
               delete x.data[0].RecurrenceRule;
               console.log(x.data[0]);
-              this.bookingService.addNewBooking(x.data[0], user.uid);
+              const docID = Date.now()
+              this.bookingService.addNewBooking(x.data[0], user.uid, docID).then(
+                z => {
+                  this.http.post(`http://localhost:5000/new-booking`, {uid: user.uid, docID: docID}).subscribe(
+                    y => {
+                      console.log(y);
+                    }
+                  );
+                }
+              );
             }
           }
         );
@@ -199,7 +210,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
       const currentAction = args.target.classList.contains('e-work-cells') ? 'Add' : 'Save';
       this.scheduleObj.openEditor(args.data, currentAction);
     }
-    if (args.type == 'Editor') {
+    if (args.type === 'Editor') {
       (<any>this.scheduleObj.eventWindow).recurrenceEditor.frequencies = ['daily', 'weekly'];
     }
   }
