@@ -185,6 +185,13 @@ def run_booking():
 
   booking(day, month, time_input, user_id, user_password)
 
+  @app.route('/new-booking', methods=['GET'])
+  def get_from_frontend():
+    ref = ref.args['day']
+    print(refs)
+    return jsonify(message = 'OK')
+
+
 
 @app.route('/return_json')
 def send_json():

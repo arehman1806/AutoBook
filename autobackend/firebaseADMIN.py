@@ -31,9 +31,15 @@ def main():
   write.close()
 
 def fetchBooking(ref):
-  booking = firestore_client.document(ref).get().to_dict()
+  booking_data = firestore_client.document(ref).get().to_dict()
+  booking_data_json = json.dumps(booking_data, indent=4, default=str)
+  # plgym_data = json.loads(booking_data_json)
+  # print(plgym_data['EndTime'])
+  print(booking_data_json)
+
 
 
 
 if __name__ == '__main__':
-  main()
+  # main()
+  fetchBooking('users/T8Zpsdxt8WWPqPToi8zRQELUWHP2/bookings/1605131372703')
