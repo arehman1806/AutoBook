@@ -1,10 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-import json
-import datetime
-
-from flask import jsonify
 
 cred = credentials.Certificate("service_account_key.json")
 app = firebase_admin.initialize_app(cred)
@@ -30,9 +26,9 @@ def main():
   write.flush()
   write.close()
 
+
 def fetchBooking(ref):
   booking = firestore_client.document(ref).get().to_dict()
-
 
 
 if __name__ == '__main__':
