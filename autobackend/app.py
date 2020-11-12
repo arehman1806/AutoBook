@@ -185,10 +185,9 @@ def run_booking():
 
   booking(day, month, time_input, user_id, user_password)
 
-  @app.route('/new-booking', methods=['GET'])
-  def get_from_frontend():
-    ref = ref.args['day']
-    print(refs)
+  @app.route('/new_booking/<string:uid>/<str:did>', methods=['GET'])
+  def new_booking(uid: str, did: str):
+    print('Using URL Variables %s and number %s' % (uid, did))
     return jsonify(message = 'OK')
 
 
