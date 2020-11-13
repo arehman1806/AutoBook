@@ -1,10 +1,9 @@
 # AutoBook.Me
 Angular front-end
 
-todo:
-- See: https://ej2.syncfusion.com/angular/documentation/schedule/getting-started/
-- Grab data from autobackend
+###WHATS NEW:
 
+- you can now delete events. This functionality works only on events created after this commit.
 
 AR:
 - firebase integrated.

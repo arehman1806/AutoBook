@@ -182,8 +182,8 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
           (user) => {
             if (user) {
               delete x.data[0].RecurrenceRule;
-              console.log(x.data[0]);
-              const docID = Date.now()
+              const docID = Date.now();
+              x.data[0].docID = docID;
               this.bookingService.addNewBooking(x.data[0], user.uid, docID).then(
                 z => {
                   this.http.get(`http://localhost:5000/new_booking/${user.uid}/${docID}`).subscribe(
@@ -196,6 +196,24 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
             }
           }
         );
+      }
+      else if (x.requestType === 'eventRemove') {
+        const docID = x.data[0].docID;
+        this.afAuth.user.subscribe(
+          (user) => {
+            if (user) {
+              this.bookingService.removeBooking(user.uid, docID).then(
+                z => {
+                  this.http.get(`http://localhost:5000/new_booking/${user.uid}/${docID}`).subscribe(
+                    y => {
+                      console.log(y);
+                    }
+                  );
+                }
+              );
+            }
+          }
+        )
       }
       // x.requestType can be eventChange or eventRemoved
     });
