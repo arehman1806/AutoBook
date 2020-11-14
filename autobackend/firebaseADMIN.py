@@ -39,7 +39,7 @@ def fetch_booking_data(uid: str, did: str):
   return booking_data_json
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
   # main()
-  fetch_booking_data("T8Zpsdxt8WWPqPToi8zRQELUWHP2", "1605131372703")
+  # fetch_booking_data("T8Zpsdxt8WWPqPToi8zRQELUWHP2", "1605131372703")
   # fetch_booking_data('users/T8Zpsdxt8WWPqPToi8zRQELUWHP2/bookings/1605131372703')

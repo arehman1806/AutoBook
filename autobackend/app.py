@@ -201,9 +201,10 @@ def new_booking(uid: str, did: int):
   # print((datetime.fromisoformat(plgym_data['EndTime'])).strftime("%d-%m-%Y"))
   day = datetime.fromisoformat(plgym_data['StartTime']).strftime("%d")
   month = datetime.fromisoformat(plgym_data['StartTime']).strftime("%m")
-
-  time_input = datetime.fromisoformat(plgym_data['EndTime']).strftime("%H:%M")
-
+  time_input = datetime.fromisoformat(plgym_data['StartTime']).strftime("%H:%M")
+  # plgym_object = plgym
+  # plgym_object.booking(day, month, time_input, 'test', 'test')
+  print(day, month)
   plgym.booking(day, month, time_input, 'test', 'test')
 
   return jsonify(message='OK')
