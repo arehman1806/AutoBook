@@ -1,5 +1,6 @@
 <div
-  fxLayout="column">
+  fxLayout="column"
+  *ngIf="connectedPlatforms$ | async as connectedPlatforms">
 
   <div
     fxLayout="row wrap"
@@ -16,8 +17,12 @@
       </mat-card-header>
 
       <mat-card-actions>
-        <button mat-raised-button (click)="gotoBooking(platform.id)">BOOK</button>
-        <button mat-raised-button>CONNECT</button>
+        <button mat-raised-button
+                (click)="gotoBooking(platform.id)"
+                *ngIf="isConnected(platform, connectedPlatforms)">BOOK</button>
+        <button mat-raised-button
+                (click)="connectANewPlatform(platform.id, platform.name)"
+                *ngIf="isNotConnected(platform, connectedPlatforms)">CONNECT</button>
       </mat-card-actions>
 
     </mat-card>

@@ -4,12 +4,18 @@ import 'firebase/auth';
 import auth from 'firebase/app';
 import {UserProfile} from '../../shared/UserProfile';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {map} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
   user$ = this.afAuth.user;
+  uid$ = this.user$.pipe(
+    map((resp) => {
+      if (resp) {return resp.uid; }
+    })
+  );
 
   constructor(private afAuth: AngularFireAuth,
               private afStore: AngularFirestore) {
@@ -42,12 +48,21 @@ export class AuthService {
         const s: UserProfile = {
           displayName: profileFromFirebase.displayName,
           email: profileFromFirebase.email,
-          uid: profileFromFirebase.uid
+          uid: profileFromFirebase.uid,
+          connectedPlatforms: []
         };
         return this.afStore.doc(`users/${profileFromFirebase.uid}`).set(s);
       }
       console.log(result);
     });
+  }
+
+  connectANewPlatform(platformID: string) {
+    this.uid$.subscribe(
+      (uid) => {
+        return true
+      }
+    )
   }
 }
 

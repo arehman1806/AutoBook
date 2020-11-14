@@ -18,10 +18,16 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import {DropDownListModule} from "@syncfusion/ej2-angular-dropdowns";
 import {DateTimePickerModule} from "@syncfusion/ej2-angular-calendars";
+import { NewPlatformComponent } from './new-platform/new-platform.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatInputModule} from '@angular/material/input';
+import {MatProgressSpinner, MatProgressSpinnerModule, MatSpinner} from '@angular/material/progress-spinner';
 
 
 @NgModule({
-  declarations: [MainComponent, NewBookingComponent],
+  declarations: [MainComponent, NewBookingComponent, NewPlatformComponent],
   imports: [
     CommonModule,
     BookingRoutingModule,
@@ -30,7 +36,13 @@ import {DateTimePickerModule} from "@syncfusion/ej2-angular-calendars";
     MatButtonModule,
     ScheduleModule,
     DropDownListModule,
-    DateTimePickerModule
+    DateTimePickerModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatProgressSpinnerModule
   ],
   providers: [DayService,
     WeekService,
