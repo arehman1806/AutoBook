@@ -9,6 +9,7 @@ from flask import request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
+import json
 from datetime import datetime
 
 options = Options()
@@ -18,23 +19,29 @@ chrome_driver = os.path.join(driver_dir, 'driver', 'chromedriver.exe')
 driver = webdriver.Chrome(chrome_driver, chrome_options=options)
 
 
-def plgym_json_parser(booking_data_json):
-  return null
+def json_parse_and_run(booking_data_json):
+  plgym_data = json.loads(booking_data_json)
+  day = datetime.fromisoformat(plgym_data['StartTime']).strftime("%d")
+  month = datetime.fromisoformat(plgym_data['StartTime']).strftime("%m")
+  time_input = datetime.fromisoformat(plgym_data['StartTime']).strftime("%H:%M")
+  site_name = plgym_data['Site']
+  activity_name = plgym_data['Activity']
+  booking(day, month, time_input, site_name, activity_name, 'test', 'test')
 
 
-def booking(day, month, time_input, user_id, user_password):
+def booking(day, month, time_input, site, activity, user_id, user_password):
   # testing account
   if user_id == 'test':
     user_id = 'mnm-matin'
-    user_password = '123*Jkljkljkl'
+    user_password = '*123*Jkljkljkl'
 
   # initialize()
   login(user_id, user_password)
   time.sleep(1)
   # Fill Form
-  select_site('Easter Bush')
+  select_site(site)
   time.sleep(1)
-  select_activity('Gym Access')
+  select_activity(activity)
   time.sleep(1)
   select_date(day, month)
   time.sleep(2)
@@ -95,6 +102,9 @@ def login(user_name, user_pass):
   password.click()
   password.send_keys(USER_PASSWORD)
   password.submit()
+
+
+
   return True
 
 
@@ -148,7 +158,6 @@ def select_date(day_x, month_x):
         return 0
 
 
-
 def send_query():
   # submit_query_button = driver.find_element_by_class_name("NavigationButton")
   submit_query_button = driver.find_element_by_xpath('//*[@id="SearchButtonDiv"]/input')
@@ -185,6 +194,7 @@ def basket(time_input: str):
   else:
     basket_link = time_link[time_input]
     basket_link[0].click()
+
 
 def select_terms():
   terms = driver.find_element_by_id("TermsAccepted")
