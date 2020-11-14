@@ -9,6 +9,7 @@ from flask import request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
+from selenium.common.exceptions import NoSuchElementException
 import json
 from datetime import datetime
 
@@ -26,14 +27,18 @@ def json_parse_and_run(booking_data_json):
   time_input = datetime.fromisoformat(plgym_data['StartTime']).strftime("%H:%M")
   site_name = plgym_data['Site']
   activity_name = plgym_data['Activity']
-  booking(day, month, time_input, site_name, activity_name, 'test', 'test')
+  booking(day, month, time_input, site_name, activity_name, 'wrong_test', 'test')
 
 
 def booking(day, month, time_input, site, activity, user_id, user_password):
   # testing account
   if user_id == 'test':
     user_id = 'mnm-matin'
-    user_password = '*123*Jkljkljkl'
+    user_password = '123*Jkljkljkl'
+
+  if user_id == 'wrong_test':
+    user_id = 'wrong_user_name'
+    user_password = 'wrong_password'
 
   # initialize()
   login(user_id, user_password)
@@ -59,6 +64,8 @@ def booking(day, month, time_input, site, activity, user_id, user_password):
 
 
 def initialize():
+  global driver
+
   options = Options()
   options.set_capability("acceptInsecureCerts", True)
 
@@ -103,9 +110,20 @@ def login(user_name, user_pass):
   password.send_keys(USER_PASSWORD)
   password.submit()
 
+  try:
+    validation_error = driver.find_element_by_xpath('//*[@id="LogOn"]/div/form/div[1]/span')
+    validation_error_text = driver.find_element_by_xpath('//*[@id="LogOn"]/div/form/div[1]/span').text
 
+    if validation_error_text == "Your attempted log on was unsuccessful. Please correct the errors and try again.":
+      print("unsuccessful")   # TODO :throw exception
+      return False
+    else:
+      print("successful")
+      return True
 
-  return True
+  except NoSuchElementException:
+    print("successful")
+    return True
 
 
 def select_site(site_name: str):
@@ -169,6 +187,12 @@ def send_query():
 
 def basket(time_input: str):
   # time_input in format "%H:%M" 24 hour clock
+
+  # try:
+  #   driver.find_element_by_xpath('//*[@id="NoSearchResultsNotice"]')
+  # except NoSuchElementException:
+  #   print("continue basket function normally")
+  # return print("not available")  # TODO :throw exception
 
   results_table = driver.find_element_by_class_name("ActivitySearchResults")
   results_table = results_table.find_element_by_tag_name('tbody')
