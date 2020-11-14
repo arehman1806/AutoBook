@@ -21,5 +21,7 @@ export class BookingService {
   }
 
 
-
+  removeBooking(uid: string, docID: number): Promise<void> {
+    return this.afStore.doc(`users/${uid}/bookings/${docID}`).delete();
+  }
 }
