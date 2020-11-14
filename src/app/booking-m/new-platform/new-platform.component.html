@@ -1,0 +1,33 @@
+<div *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+  <h1 mat-dialog-title>You are trying to connect {{data.platformName}}. Its id is {{data.platformID}}</h1>
+  <div mat-dialog-content>
+    <p>What's your favorite animal?</p>
+    <form #userCredentialsForm = "ngForm" (ngSubmit)="connectNewPlatform()" fxLayout="column">
+
+      <mat-form-field>
+        <mat-label>
+          Your pleasance user id
+        </mat-label>
+        <input matInput type="text" [(ngModel)]="newPlatformModel.username" name="username" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>
+          Your pleasance password
+        </mat-label>
+
+        <input type="password" matInput [(ngModel)]="newPlatformModel.password" name="password" required>
+      </mat-form-field>
+
+      <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()" cdkFocusInitial>Cancel</button>
+        <button mat-button [disabled]="userCredentialsForm.invalid" type="submit">Connect</button>
+      </div>
+
+    </form>
+  </div>
+</div>
