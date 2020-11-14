@@ -8,7 +8,7 @@ const routes: Routes = [
   {path: 'calender', component: CalenderComponent},
   {path: 'booking',
     loadChildren: () => import ('./booking-m/booking.module').then(m => m.BookingModule)},
-  {path: '', redirectTo: 'home', pathMatch: 'full'}
+  {path: '', redirectTo: 'booking', pathMatch: 'full'}
 ];
 
 @NgModule({
