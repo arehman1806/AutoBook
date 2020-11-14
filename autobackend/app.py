@@ -10,6 +10,11 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
 
+import firebaseADMIN
+import plgym
+import json
+from datetime import datetime
+
 
 def booking(day, month, time_input, user_id, user_password):
   USER_ID = user_id
@@ -43,6 +48,7 @@ def booking(day, month, time_input, user_id, user_password):
 
     thread = threading.Thread(target=threaded_function)
     thread.start()
+
   def login(user_name, user_pass):
     USER_ID = user_id
     USER_PASSWORD = user_password
@@ -185,21 +191,22 @@ def run_booking():
 
   booking(day, month, time_input, user_id, user_password)
 
-  @app.route('/new_booking/<string:uid>/<str:did>', methods=['GET'])
-  def new_booking(uid: str, did: str):
-    print('Using URL Variables %s and number %s' % (uid, did))
-    return jsonify(message = 'OK')
 
+@app.route('/new_booking/<string:uid>/<int:did>')
+def new_booking(uid: str, did: int):
+  print('Using URL Variables %s and number %d' % (uid, did))
+  did = str(did)
+  booking_data_json = firebaseADMIN.fetch_booking_data(uid, did)
+  plgym_data = json.loads(booking_data_json)
+  # print((datetime.fromisoformat(plgym_data['EndTime'])).strftime("%d-%m-%Y"))
+  day = datetime.fromisoformat(plgym_data['StartTime']).strftime("%d")
+  month = datetime.fromisoformat(plgym_data['StartTime']).strftime("%m")
 
+  time_input = datetime.fromisoformat(plgym_data['EndTime']).strftime("%H:%M")
 
-@app.route('/return_json')
-def send_json():
-  return jsonify(message='Sending Json')
+  plgym.booking(day, month, time_input, 'test', 'test')
 
-
-@app.route('/url_variables/<string:a>/<int:n>')
-def url_variables(a: str, n: int):
-  return jsonify(message='Using URL Variables %s and number %d' % (a, n))
+  return jsonify(message='OK')
 
 
 if __name__ == '__main__':
