@@ -15,6 +15,7 @@ import plgym
 
 app = Flask(__name__)
 
+
 @app.route('/new_booking/<string:uid>/<int:did>')
 def new_booking(uid: str, did: int):
   print('Using URL Variables %s and number %d' % (uid, did))
