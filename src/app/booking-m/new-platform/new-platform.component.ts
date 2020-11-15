@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AuthService} from '../../services/Auth/auth.service';
 import {NewPlatform} from './NewPlatform';
+import {HttpClient} from '@angular/common/http';
 
 // tslint:disable-next-line:class-name
 interface platformDetails {
@@ -21,7 +22,8 @@ export class NewPlatformComponent implements OnInit {
 
   constructor( public dialogRef: MatDialogRef<NewPlatformComponent>,
                @Inject(MAT_DIALOG_DATA) public data: platformDetails,
-               private auth: AuthService) {
+               private auth: AuthService,
+               private http: HttpClient) {
     this.newPlatformModel = new NewPlatform(data.platformID, '', '', '');
     this.auth.user$.subscribe(
       (user) => {
@@ -42,7 +44,20 @@ export class NewPlatformComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   connectNewPlatform() {
-    console.log(JSON.stringify(this.newPlatformModel));
+    console.log((this.newPlatformModel));
     this.loading = true;
+    this.http.get(`http://localhost:5000/new-platform`, {params: {
+      autoBookUID: this.newPlatformModel.autoBookUID,
+        username: this.newPlatformModel.username,
+        password: this.newPlatformModel.password,
+        platformID: this.newPlatformModel.platformID
+      }}).subscribe(x => {
+        window.alert(x);
+        this.loading = false;
+    },
+      y => {
+        window.alert(y);
+        this.loading = false;
+      })
   }
 }
