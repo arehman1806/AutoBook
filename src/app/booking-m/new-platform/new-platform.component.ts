@@ -46,12 +46,12 @@ export class NewPlatformComponent implements OnInit {
   connectNewPlatform() {
     console.log((this.newPlatformModel));
     this.loading = true;
-    this.http.get(`http://localhost:5000/new-platform`, {params: {
-      autoBookUID: this.newPlatformModel.autoBookUID,
+    this.http.post(`http://localhost:5000/new-platform`, {
+        autoBookUID: this.newPlatformModel.autoBookUID,
         username: this.newPlatformModel.username,
         password: this.newPlatformModel.password,
         platformID: this.newPlatformModel.platformID
-      }}).subscribe(x => {
+      }).subscribe(x => {
         window.alert(x);
         this.loading = false;
     },
