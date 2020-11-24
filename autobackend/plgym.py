@@ -13,11 +13,17 @@ from selenium.common.exceptions import NoSuchElementException
 import json
 from datetime import datetime
 
+# from selenium import webdriver
+# from webdriver_manager.chrome import ChromeDriverManager
+
+driver = webdriver.Chrome(ChromeDriverManager().install())
+
 options = Options()
 options.set_capability("acceptInsecureCerts", True)
 driver_dir = os.path.dirname(__file__)
 chrome_driver = os.path.join(driver_dir, 'driver', 'chromedriver.exe')
 driver = webdriver.Chrome(chrome_driver, chrome_options=options)
+# driver = webdriver.Chrome(ChromeDriverManager().install, chrome_options=options)
 
 
 def json_parse_and_run(booking_data_json):
@@ -27,6 +33,7 @@ def json_parse_and_run(booking_data_json):
   time_input = datetime.fromisoformat(plgym_data['StartTime']).strftime("%H:%M")
   site_name = plgym_data['Site']
   activity_name = plgym_data['Activity']
+
   booking(day, month, time_input, site_name, activity_name, 'wrong_test', 'test')
 
 
