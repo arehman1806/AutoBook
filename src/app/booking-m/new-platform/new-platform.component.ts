@@ -46,18 +46,24 @@ export class NewPlatformComponent implements OnInit {
   connectNewPlatform() {
     console.log((this.newPlatformModel));
     this.loading = true;
-    this.http.post(`http://localhost:5000/new-platform`, {
+    this.http.post(`http://localhost:5000/new_platform`, {
         autoBookUID: this.newPlatformModel.autoBookUID,
         username: this.newPlatformModel.username,
         password: this.newPlatformModel.password,
         platformID: this.newPlatformModel.platformID
       }).subscribe(x => {
-        window.alert(x);
+        if (x.response_message === 'True') {
+          window.alert(`Successfully connected with ${this.data.platformName}`);
+        }
+        else if (x.response_message === 'False') {
+          window.alert(`Could not connect with ${this.data.platformName}. You might wanna check your id and password again`);
+        }
         this.loading = false;
     },
       y => {
-        window.alert(y);
+        console.log(y);
+        window.alert('Interval server error. Contact us or try again later');
         this.loading = false;
-      })
+      });
   }
 }

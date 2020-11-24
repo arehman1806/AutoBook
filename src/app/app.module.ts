@@ -20,10 +20,14 @@ import {AngularFireModule} from '@angular/fire';
 import { environment } from 'environments/environment';
 import {MatCardModule} from '@angular/material/card';
 
-// Matin commit
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -47,14 +51,20 @@ import 'firebase/firestore';
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     ScheduleModule, RecurrenceEditorModule,
-    AngularFireModule.initializeApp({apiKey: 'AIzaSyBlfZNxYxqOrS7HrVJBK9kfCezS6r4-1Qo',
+    AngularFireModule.initializeApp({
+      apiKey: 'AIzaSyBlfZNxYxqOrS7HrVJBK9kfCezS6r4-1Qo',
       authDomain: 'autobook-e740b.firebaseapp.com',
       databaseURL: 'https://autobook-e740b.firebaseio.com',
       projectId: 'autobook-e740b',
       storageBucket: 'autobook-e740b.appspot.com',
       messagingSenderId: '919990050610',
-      appId: '1:919990050610:web:e6c56f256a75aeccd2412b'}),
-    MatCardModule
+      appId: '1:919990050610:web:e6c56f256a75aeccd2412b'
+    }),
+    MatCardModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatListModule, MatIconModule
   ],
   exports: [
     MatFormFieldModule,

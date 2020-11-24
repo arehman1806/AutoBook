@@ -5,6 +5,7 @@ import auth from 'firebase/app';
 import {UserProfile} from '../../shared/UserProfile';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
+import {Router} from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +19,8 @@ export class AuthService {
   );
 
   constructor(private afAuth: AngularFireAuth,
-              private afStore: AngularFirestore) {
+              private afStore: AngularFirestore,
+              private router: Router) {
   }
 
   // tslint:disable-next-line:typedef
@@ -57,12 +59,20 @@ export class AuthService {
     });
   }
 
+  // tslint:disable-next-line:typedef
   connectANewPlatform(platformID: string) {
     this.uid$.subscribe(
       (uid) => {
-        return true
+        return true;
       }
-    )
+    );
+  }
+
+  // tslint:disable-next-line:typedef
+  signOut() {
+    return this.afAuth.signOut().then( x => {
+      this.router.navigate(['home']);
+    });
   }
 }
 

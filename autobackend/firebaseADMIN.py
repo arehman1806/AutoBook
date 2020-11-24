@@ -4,7 +4,7 @@ from firebase_admin import firestore
 import json
 from datetime import datetime
 
-cred = credentials.Certificate("service_account_key.json")
+cred = credentials.Certificate("C:\\Users\\arehm\\WebstormProjects\\AutoBook\\autobackend\\service_account_key.json")
 app = firebase_admin.initialize_app(cred)
 
 firestore_client = firebase_admin.firestore.client()
