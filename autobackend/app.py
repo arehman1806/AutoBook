@@ -4,6 +4,7 @@ from flask_cors import CORS
 
 import firebaseADMIN
 import plgym
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -13,13 +14,18 @@ CORS(app)
 def new_platform():
   platform_data_json = request.get_json()
   print(platform_data_json)
+  username = platform_data_json['username']
+  password = platform_data_json['password']
+  if plgym.login(username, password):
+    response_message = 'True'
+  else:
+    response_message = 'False'
 
-  return jsonify(message='OK')
+  return jsonify(login_satus=response_message)
 
 
 @app.route('/new_booking/<string:uid>/<int:did>')
 def new_booking(uid: str, did: int):
-
   print('Booking user id: %s and document number %d' % (uid, did))
   booking_data_json = firebaseADMIN.fetch_booking_data(uid, str(did))
   print(booking_data_json)

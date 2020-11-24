@@ -17,5 +17,8 @@ def fetch_booking_data(uid: str, did: str):
   booking_data_json = json.dumps(booking_data, default=lambda o: o.isoformat() if hasattr(o, 'isoformat') else o)  # stores datetime in nanoseconds
   return booking_data_json
 
+def save_platform_connect_data(uid: str, did: str):
+  return True
+
 # if __name__ == '__main__':
 # main()

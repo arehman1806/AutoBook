@@ -13,12 +13,12 @@ from selenium.common.exceptions import NoSuchElementException
 import json
 from datetime import datetime
 
-
 options = Options()
 options.set_capability("acceptInsecureCerts", True)
 driver_dir = os.path.dirname(__file__)
 chrome_driver = os.path.join(driver_dir, 'driver', 'chromedriver.exe')
 driver = webdriver.Chrome(chrome_driver, chrome_options=options)
+
 
 def json_parse_and_run(booking_data_json):
   plgym_data = json.loads(booking_data_json)
@@ -116,7 +116,7 @@ def login(user_name, user_pass):
     validation_error_text = driver.find_element_by_xpath('//*[@id="LogOn"]/div/form/div[1]/span').text
 
     if validation_error_text == "Your attempted log on was unsuccessful. Please correct the errors and try again.":
-      print("unsuccessful")   # TODO :throw exception
+      print("unsuccessful")  # TODO :throw exception
       return False
     else:
       print("successful")
