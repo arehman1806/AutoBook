@@ -16,7 +16,7 @@ from datetime import datetime
 # from selenium import webdriver
 # from webdriver_manager.chrome import ChromeDriverManager
 
-driver = webdriver.Chrome(ChromeDriverManager().install())
+# driver = webdriver.Chrome(ChromeDriverManager().install())
 
 options = Options()
 options.set_capability("acceptInsecureCerts", True)
