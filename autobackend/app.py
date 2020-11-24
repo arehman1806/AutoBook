@@ -16,8 +16,12 @@ def new_platform():
   print(platform_data_json)
   username = platform_data_json['username']
   password = platform_data_json['password']
+  platform_id = platform_data_json['platformID']
+  uid = platform_data_json['autoBookUID']
   if plgym.login(username, password):
+    firebaseADMIN.save_platform_connect_data(uid, platform_id, username, password)
     response_message = 'True'
+
   else:
     response_message = 'False'
 

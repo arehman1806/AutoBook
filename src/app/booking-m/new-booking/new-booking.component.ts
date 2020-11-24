@@ -204,7 +204,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
             if (user) {
               this.bookingService.removeBooking(user.uid, docID).then(
                 z => {
-                  this.http.get(`http://localhost:5000/new_booking/${user.uid}/${docID}`).subscribe(
+                  this.http.get(`http://localhost:5000/delete_booking/${user.uid}/${docID}`).subscribe(
                     y => {
                       console.log(y);
                     }
