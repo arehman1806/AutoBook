@@ -28,7 +28,25 @@ def json_parse_and_run(booking_data_json):
   site_name = plgym_data['Site']
   activity_name = plgym_data['Activity']
 
-  booking(day, month, time_input, site_name, activity_name, 'wrong_test', 'test')
+  d1 = datetime.fromisoformat(plgym_data['StartTime']).date()
+  d2 = datetime.now().date()
+  days_diff = (d1 - d2).days
+
+  if days_diff < 0:
+    print("booking date in the past")
+  elif days_diff == 0:
+    print("on the same day: need to check time")
+  elif days_diff < 3:
+    print("book now")
+  else:
+    print("schedule booking")
+
+
+
+
+
+
+  # booking(day, month, time_input, site_name, activity_name, 'wrong_test', 'test')
 
 
 def booking(day, month, time_input, site, activity, user_id, user_password):
