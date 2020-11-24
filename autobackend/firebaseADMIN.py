@@ -14,8 +14,10 @@ def fetch_booking_data(uid: str, did: str):
   ref = 'users/' + uid + '/bookings/' + did
 
   booking_data = firestore_client.document(ref).get().to_dict()
-  booking_data_json = json.dumps(booking_data, default=lambda o: o.isoformat() if hasattr(o, 'isoformat') else o)  # stores datetime in nanoseconds
+  booking_data_json = json.dumps(booking_data, default=lambda o: o.isoformat() if hasattr(o,
+                                                                                          'isoformat') else o)  # stores datetime in nanoseconds
   return booking_data_json
+
 
 def save_platform_connect_data(uid: str, did: str):
   return True
