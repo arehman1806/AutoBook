@@ -49,5 +49,9 @@ export class MainComponent implements OnInit {
       width: '50%',
       data: {platformID: id, platformName: name}
     });
+    dialogRef.afterClosed().subscribe((x) => {
+      if (x.successful) { window.alert('connected'); }
+      else {window.alert('not connected'); }
+    });
   }
 }

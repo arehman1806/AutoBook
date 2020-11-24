@@ -21,7 +21,7 @@ def new_platform():
   else:
     response_message = 'False'
 
-  return jsonify(login_satus=response_message)
+  return jsonify(login_status=response_message)
 
 
 @app.route('/new_booking/<string:uid>/<int:did>')

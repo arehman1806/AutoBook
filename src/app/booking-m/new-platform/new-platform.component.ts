@@ -52,18 +52,25 @@ export class NewPlatformComponent implements OnInit {
         password: this.newPlatformModel.password,
         platformID: this.newPlatformModel.platformID
       }).subscribe(x => {
-        if (x.response_message === 'True') {
+        console.log(x);
+        // @ts-ignore
+        if (x.login_status === 'True') {
           window.alert(`Successfully connected with ${this.data.platformName}`);
+          this.dialogRef.close({successful: true});
         }
-        else if (x.response_message === 'False') {
-          window.alert(`Could not connect with ${this.data.platformName}. You might wanna check your id and password again`);
+        else { // @ts-ignore
+          if (x.login_status === 'False') {
+                    window.alert(`Could not connect with ${this.data.platformName}. You might wanna check your id and password again`);
+                  }
         }
         this.loading = false;
+        this.dialogRef.close({successful: false});
     },
       y => {
         console.log(y);
         window.alert('Interval server error. Contact us or try again later');
         this.loading = false;
+        this.dialogRef.close({successful: false});
       });
   }
 }
