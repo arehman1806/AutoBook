@@ -1,17 +1,14 @@
+import json
 import os
 import threading
 import time
-from decimal import Decimal
+from datetime import datetime
 
 import pyautogui as pyautogui
-from flask import Flask, jsonify
-from flask import request
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
-from selenium.common.exceptions import NoSuchElementException
-import json
-from datetime import datetime
 
 options = Options()
 options.set_capability("acceptInsecureCerts", True)

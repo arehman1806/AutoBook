@@ -187,6 +187,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
               delete x.data[0].RecurrenceRule;
               const docID = Date.now();
               x.data[0].docID = docID;
+              x.data[0].status = 'pending'; // pending, success, failed
               this.bookingService.addNewBooking(x.data[0], user.uid, docID).then(
                 z => {
                   this.http.get(`http://localhost:5000/new_booking/${user.uid}/${docID}`).subscribe(

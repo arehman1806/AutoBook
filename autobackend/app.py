@@ -1,6 +1,11 @@
 from flask import Flask, jsonify
 from flask import request
 from flask_cors import CORS
+import time
+import atexit
+import scheduler
+
+from apscheduler.schedulers.background import BackgroundScheduler
 
 import firebaseADMIN
 import plgym
@@ -36,6 +41,16 @@ def new_booking(uid: str, did: int):
   plgym.json_parse_and_run(booking_data_json)
 
   return jsonify(message='OK')
+
+
+def print_date_time():
+  print(time.strftime("%A, %d. %B %Y %I:%M:%S %p"))
+
+
+@app.route('/')
+def test():
+  scheduler.init()
+  return 0
 
 
 if __name__ == '__main__':
