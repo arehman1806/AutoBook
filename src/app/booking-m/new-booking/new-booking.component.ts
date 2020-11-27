@@ -9,7 +9,8 @@ import {
   WeekService,
   WorkWeekService,
   EventSettingsModel,
-  PopupOpenEventArgs
+  PopupOpenEventArgs,
+  EventRenderedArgs
 } from '@syncfusion/ej2-angular-schedule';
 import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import { DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
@@ -36,7 +37,8 @@ L10n.load({
 
 @Component({
   selector: 'app-new-booking',
-  template: `<ejs-schedule #scheduleObj height="850" width="1250" [eventSettings] = "eventObject" [currentView] = "setView" [showQuickInfo]='showQuickInfo'  (popupOpen)='onPopupOpen($event)'>
+  template: `<ejs-schedule #scheduleObj height="850" width="1250" [eventSettings] = "eventObject" [currentView] = "setView" [showQuickInfo]='showQuickInfo'  (popupOpen)='onPopupOpen($event)' (eventRendered)='eventRendered($event)'>
+
     <ng-template #editorTemplate let-data>
       <table class="custom-event-editor" width="100%" cellpadding="5">
         <tbody>
@@ -159,6 +161,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
                   const srtTime = x.StartTime.seconds.toString() + '000';
                   x.StartTime = new Date(parseInt(srtTime));
                   x.EndTime = new Date(parseInt(endTime));
+                  x.Subject = 'Pleasance'; // TODO: line added for subject
                   bookingsFetched.push(x);
                 }
               );
@@ -217,6 +220,12 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
       }
       // x.requestType can be eventChange or eventRemoved
     });
+  }
+
+  public eventRendered(args: EventRenderedArgs): void {
+    // add if statements
+      // TODO: Add if statements
+      args.element.style.backgroundColor = 'red';
   }
 
   public onPopupOpen(args: PopupOpenEventArgs): void {
