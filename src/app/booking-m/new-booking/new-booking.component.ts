@@ -161,7 +161,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
                   const srtTime = x.StartTime.seconds.toString() + '000';
                   x.StartTime = new Date(parseInt(srtTime));
                   x.EndTime = new Date(parseInt(endTime));
-                  x.Subject = 'Pleasance'; // TODO: line added for subject
+                  x.Subject = x.Site;
                   bookingsFetched.push(x);
                 }
               );
@@ -225,8 +225,15 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
 
   public eventRendered(args: EventRenderedArgs): void {
     // add if statements
-      // TODO: Add if statements
-      args.element.style.backgroundColor = 'red';
+      if (args.data.status === 'failed') {
+        args.element.style.backgroundColor = 'red';
+      }
+      else if (args.data.status === 'success') {
+        args.element.style.backgroundColor = 'green';
+      }
+      else if (args.data.status === 'pending') {
+        args.element.style.backgroundColor = 'blue';
+      }
   }
 
   public onPopupOpen(args: PopupOpenEventArgs): void {
