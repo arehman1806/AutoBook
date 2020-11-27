@@ -3,6 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import json
 from datetime import datetime
+from google.api_core.datetime_helpers import DatetimeWithNanoseconds
 import os
 
 current_dir = os.path.dirname(__file__)
@@ -31,5 +32,19 @@ def save_platform_connect_data(uid: str, platform_id: str, platform_username: st
   firestore_client.document(userProfileRef).update({'connectedPlatforms': userProfileConnectedPlatforms})
   return True
 
-# if __name__ == '__main__':
-# main()
+
+def fetch_bookings_by_date(platform_id: str, date):
+  usersRef = 'users'
+  users = firestore_client.collection(usersRef).stream()
+  bookingsFetched = []
+  for user in users:
+    userID = user.to_dict()['uid']
+    bookingsRef = 'users/' + userID + '/bookings'
+    bookings = firestore_client.collection(bookingsRef).where(u'StartTime', u'<=', date).where(u'platformID', u'==', platform_id).stream()
+    for booking in bookings:
+      bookingsFetched.append(booking.to_dict())
+  return bookingsFetched
+
+
+if __name__ == '__main__':
+  fetch_bookings_by_date('pl-1', DatetimeWithNanoseconds.now())

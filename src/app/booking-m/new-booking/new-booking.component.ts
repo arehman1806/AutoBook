@@ -21,6 +21,7 @@ import {BookingService} from '../../services/booking.service';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
 
 L10n.load({
   'en-US': {
@@ -105,7 +106,8 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
               private bookingService: BookingService,
               private afAuth: AngularFireAuth,
               private afStore: AngularFirestore,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private activatedRoute: ActivatedRoute) {
   }
   title = 'my-scheduler-app';
 
@@ -188,6 +190,7 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
               const docID = Date.now();
               x.data[0].docID = docID;
               x.data[0].status = 'pending'; // pending, success, failed
+              x.data[0].platformID = this.activatedRoute.snapshot.params.id;
               this.bookingService.addNewBooking(x.data[0], user.uid, docID).then(
                 z => {
                   this.http.get(`http://localhost:5000/new_booking/${user.uid}/${docID}`).subscribe(
@@ -230,9 +233,6 @@ export class NewBookingComponent implements OnInit, AfterViewInit {
       }
       else if (args.data.status === 'success') {
         args.element.style.backgroundColor = 'green';
-      }
-      else if (args.data.status === 'pending') {
-        args.element.style.backgroundColor = 'blue';
       }
   }
 
