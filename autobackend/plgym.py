@@ -148,7 +148,7 @@ def select_activity(activity_name: str):
   return True, 'Activity Selected'
 
 
-def select_date(day_x, month_x):
+def select_date(day_x, month_x):                                                                 
   months_to_num = {
     'january': 1,
     'february': 2,

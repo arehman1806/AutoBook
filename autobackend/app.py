@@ -6,6 +6,8 @@ import atexit
 import scheduler
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from google.api_core.datetime_helpers import DatetimeWithNanoseconds
+from datetime import datetime, timedelta
 
 import firebaseADMIN
 import plgym
@@ -43,15 +45,26 @@ def new_booking(uid: str, did: int):
   return jsonify(message='OK')
 
 
-def print_date_time():
-  print(time.strftime("%A, %d. %B %Y %I:%M:%S %p"))
+
 
 
 @app.route('/')
-def test():
-  scheduler.init()
-  return 0
+# def test():
+#   scheduler.init()
+#   return 0
+
+def pl_scheduler():
+  d_3 = DatetimeWithNanoseconds.now()+timedelta(days=3)
+  fetched_bookings = firebaseADMIN.fetch_bookings_by_date('pl-1', d_3)
+  for booking_data in fetched_bookings:
+    booking_data_json = firebaseADMIN.convert_booking_to_json(booking_data)
+
+
+
+def print_date_time():
+  print(DatetimeWithNanoseconds.now()+timedelta(days=3))
 
 
 if __name__ == '__main__':
   app.run()
+  print(DatetimeWithNanoseconds.now())

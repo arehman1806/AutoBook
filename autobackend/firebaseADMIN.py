@@ -7,7 +7,7 @@ from google.api_core.datetime_helpers import DatetimeWithNanoseconds
 import os
 
 current_dir = os.path.dirname(__file__)
-cert_dir = os.path.join(current_dir,'service_account_key.json')
+cert_dir = os.path.join(current_dir, 'service_account_key.json')
 cred = credentials.Certificate(cert_dir)
 app = firebase_admin.initialize_app(cred)
 
@@ -30,20 +30,27 @@ def save_platform_connect_data(uid: str, platform_id: str, platform_username: st
   userProfileConnectedPlatforms.append(platform_id)
   firestore_client.document(userPlatformRef).set({'username': platform_username, 'password': platform_password})
   firestore_client.document(userProfileRef).update({'connectedPlatforms': userProfileConnectedPlatforms})
+
   return True
 
 
+def convert_booking_to_json(booking_data):
+  return json.dumps(booking_data, default=lambda o: o.isoformat() if hasattr(o,
+                                                                             'isoformat') else o)
+
+
 def fetch_bookings_by_date(platform_id: str, date):
-  usersRef = 'users'
-  users = firestore_client.collection(usersRef).stream()
-  bookingsFetched = []
+  users_ref = 'users'
+  users = firestore_client.collection(users_ref).stream()
+  bookings_fetched = []
   for user in users:
-    userID = user.to_dict()['uid']
-    bookingsRef = 'users/' + userID + '/bookings'
-    bookings = firestore_client.collection(bookingsRef).where(u'StartTime', u'<=', date).where(u'platformID', u'==', platform_id).stream()
+    user_id = user.to_dict()['uid']
+    bookings_ref = 'users/' + user_id + '/bookings'
+    bookings = firestore_client.collection(bookings_ref).where(u'StartTime', u'<=', date).where(u'platformID', u'==',
+                                                                                                platform_id).stream()
     for booking in bookings:
-      bookingsFetched.append(booking.to_dict())
-  return bookingsFetched
+      bookings_fetched.append(booking.to_dict())
+  return bookings_fetched
 
 
 if __name__ == '__main__':
