@@ -39,10 +39,6 @@ def json_parse_and_run(booking_data_json):
     print("schedule booking")
 
 
-
-
-
-
   # booking(day, month, time_input, site_name, activity_name, 'wrong_test', 'test')
 
 
@@ -127,36 +123,32 @@ def login(user_name, user_pass):
   password.submit()
 
   try:
-    validation_error = driver.find_element_by_xpath('//*[@id="LogOn"]/div/form/div[1]/span')
+    # validation_error = driver.find_element_by_xpath('//*[@id="LogOn"]/div/form/div[1]/span')
     validation_error_text = driver.find_element_by_xpath('//*[@id="LogOn"]/div/form/div[1]/span').text
 
     if validation_error_text == "Your attempted log on was unsuccessful. Please correct the errors and try again.":
-      print("unsuccessful")  # TODO :throw exception
-      return False
+      return False, "Failed login"
     else:
-      print("successful")
-      return True
+      return True, "But Unsuccessful Login Text not found"
 
   except NoSuchElementException:
-    print("successful")
-    return True
+    return True, "Unsuccessful Login Text was not found"
 
 
 def select_site(site_name: str):
   # driver.get('https://www.sport.ed.ac.uk/online-booking')
   site = Select(driver.find_element_by_id("SiteID"))
   site.select_by_visible_text(site_name)
-  return True
+  return True, 'SiteID Selected'
 
 
 def select_activity(activity_name: str):
   activity = Select(driver.find_element_by_id("Activity"))
   activity.select_by_visible_text(activity_name)
-  return True
+  return True, 'Activity Selected'
 
 
 def select_date(day_x, month_x):
-  print(day_x, month_x)
   months_to_num = {
     'january': 1,
     'february': 2,
