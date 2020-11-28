@@ -7,6 +7,8 @@ import {
   WorkWeekService
 } from "@syncfusion/ej2-angular-schedule";
 
+// TODO: Delete
+
 @Component({
   selector: 'app-calender',
   template: `<ejs-schedule> </ejs-schedule>`,

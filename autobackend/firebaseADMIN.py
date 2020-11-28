@@ -52,5 +52,5 @@ def fetch_bookings_by_date(platform_id: str, date):
   return bookings_fetched
 
 
-if __name__ == '__main__':
-  fetch_bookings_by_date('pl-1', DatetimeWithNanoseconds.now())
+# if __name__ == '__main__':
+#   fetch_bookings_by_date('pl-1', DatetimeWithNanoseconds.now())
