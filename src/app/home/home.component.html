@@ -11,33 +11,30 @@
 
     <mat-form-field>
       <mat-label>
-        Your pleasance user id
+        Your Email ID
       </mat-label>
-      <input type="text" matInput formControlName="uid">
+      <input type="text" matInput formControlName="email">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>
-        Your pleasance password
+        Your Password
       </mat-label>
 
-      <input type="text" matInput formControlName="password">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" formControlName="date"
-             >
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker [showSpinners]="true" [showSeconds]="false"
-                               [stepHour]="1" [stepMinute]="30" [stepSecond]="1"
-                               [touchUi]="true"
-                               [disableMinute]="false" [hideTime]="false">
-      </ngx-mat-datetime-picker>
+      <input type="password" matInput formControlName="password">
     </mat-form-field>
 
 
+      <mat-label>
+        Sign Up?
+      </mat-label>
+      <mat-slide-toggle (change)="changeFormType($event)"></mat-slide-toggle>
 
-    <button mat-raised-button type="submit">Submit</button>
+      <mat-label><button (click)="passwordReset()">Forgot your password?</button> </mat-label>
+
+
+    <button *ngIf="forLogin" mat-raised-button type="submit">Login</button>
+    <button *ngIf="!forLogin" mat-raised-button type="submit">Sign Up</button>
 
   </form>
 
@@ -51,7 +48,7 @@
     <mat-card-content class="login-signup-card-content"
       fxLayout="column">
       <button mat-button (click)="authWithGoogle()">Login with Google </button>
-      <button mat-button>Login with Microsoft</button>
+      <button mat-button (click)="authWithMicrosoft()">Login with Microsoft</button>
     </mat-card-content>
   </mat-card>
 

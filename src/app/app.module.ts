@@ -28,6 +28,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatSidenavModule,
     MatToolbarModule,
     MatMenuModule,
-    MatListModule, MatIconModule
+    MatListModule, MatIconModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatFormFieldModule,

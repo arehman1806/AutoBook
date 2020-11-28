@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../services/Auth/auth.service';
 import {Router} from '@angular/router';
+import {$EOF} from 'codelyzer/angular/styles/chars';
+import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +13,7 @@ import {Router} from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   public bookingForm: FormGroup;
+  public forLogin = true;
 
   constructor(
     private fb: FormBuilder,
@@ -20,25 +23,35 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookingForm = this.fb.group({
-      uid: [''],
-      password: [''],
-      date: ['']
+      email: [''],
+      password: ['']
     });
   }
 
 
   onSubmit($event: Event): void {
-    const uid = this.bookingForm.value.uid;
+    const email = this.bookingForm.value.email;
     const password = this.bookingForm.value.password;
-    const x = this.bookingForm.value.date as Date;
-    const day = x.getDate();
-    console.log(x);
-    const month = x.getMonth() + 1;
-    const time = x.getHours() + (x.getMinutes() / 6000 ) * 100;
-    const url = `http://127.0.0.1:5000/?uid=${uid}&password=${password}&day=${day}&month=${month}&time=${time}`;
-    window.alert('You are being redirected to ' + url);
-    this.http.get(url).subscribe(x => {console.log(x); }, y => {console.log(y); });
-    window.alert('you should have been redirected');
+    if (this.forLogin) {
+      this.auth.loginWithEmailAndPassword(email, password).then(
+        x => {
+          this.router.navigate(['booking', 'main']);
+        }
+      ).catch(x => {
+        window.alert(x.message);
+      });
+    }
+    else {
+      this.auth.signUpWithEmailAndPassword(email, password).then(
+        x => {
+          this.router.navigate(['booking', 'main'])
+        }
+      ).catch(
+        x => {
+          window.alert(x.message);
+        }
+      )
+    }
   }
 
   authWithGoogle(): void {
@@ -47,5 +60,26 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['booking', 'main']);
       }
     );
+  }
+
+  authWithMicrosoft(): void {
+    this.auth.loginWithMicrosoft().then(
+      x => {
+        this.router.navigate(['booking', 'main']);
+      }
+    );
+  }
+
+  // tslint:disable-next-line:typedef
+  changeFormType($event: MatSlideToggleChange) {
+    this.forLogin = !$event.checked;
+  }
+
+  passwordReset() {
+    this.auth.sendPasswordResetEmail(this.bookingForm.getRawValue().email).then(
+      x => {
+        window.alert('Verification email has been sent. You might wish to check your spam folder')
+      }
+    )
   }
 }

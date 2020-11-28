@@ -44,10 +44,9 @@ def fetch_bookings_by_date(platform_id: str, date):
   users = firestore_client.collection(users_ref).stream()
   bookings_fetched = []
   for user in users:
-    user_id = user.to_dict()['uid']
-    bookings_ref = 'users/' + user_id + '/bookings'
-    bookings = firestore_client.collection(bookings_ref).where(u'StartTime', u'<=', date).where(u'platformID', u'==',
-                                                                                                platform_id).stream()
+    userID = user.to_dict()['uid']
+    bookingsRef = 'users/' + userID + '/bookings'
+    bookings = firestore_client.collection(bookingsRef).where(u'StartTime', u'<=', date).where(u'platformID', u'==', platform_id).where(u'status', u'==', 'pending').stream()
     for booking in bookings:
       bookings_fetched.append(booking.to_dict())
   return bookings_fetched
