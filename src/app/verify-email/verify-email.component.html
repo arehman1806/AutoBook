@@ -1,0 +1,3 @@
+<h1>Kindly verify your email.</h1>
+<h4 *ngIf="emailSent">Verification email has been sent</h4>
+<button mat-raised-button [disabled]="emailSent" (click)="resendVerificationEmail()">Resend verification email</button>
