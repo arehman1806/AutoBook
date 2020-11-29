@@ -1,55 +1,70 @@
 <div
-  fxLayout="column"
+  class="page-wrapper"
+  fxLayout="row"
+  fxLayout.lt-md="column"
+  fxLayout.md="column"
   fxLayoutAlign="center center">
-  <!--HEADING -->
-  <h1
-    class="mat-headline">
-    Create a new booking
-  </h1>
 
-  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit($event)" fxLayout="column">
-
-    <mat-form-field>
-      <mat-label>
-        Your Email ID
-      </mat-label>
-      <input type="text" matInput formControlName="email">
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>
-        Your Password
-      </mat-label>
-
-      <input type="password" matInput formControlName="password">
-    </mat-form-field>
-
-
-      <mat-label>
-        Sign Up?
-      </mat-label>
-      <mat-slide-toggle (change)="changeFormType($event)"></mat-slide-toggle>
-
-      <mat-label><button (click)="passwordReset()">Forgot your password?</button> </mat-label>
-
-
-    <button *ngIf="forLogin" mat-raised-button type="submit">Login</button>
-    <button *ngIf="!forLogin" mat-raised-button type="submit">Sign Up</button>
-
-  </form>
-
-  <mat-card
-    fxLayoutAlign="center center"
+  <div
+    class="login-content-wrapper"
     fxLayout="column"
-    class="login-signup-card">
-    <mat-card-header>
-      <mat-card-title>Login OR SignUp</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="login-signup-card-content"
-      fxLayout="column">
-      <button mat-button (click)="authWithGoogle()">Login with Google </button>
-      <button mat-button (click)="authWithMicrosoft()">Login with Microsoft</button>
-    </mat-card-content>
-  </mat-card>
+    fxLayoutAlign="start start">
+
+    <!--LOGO-->
+
+    <h1>Welcome to AUTOBOOK.ME</h1>
+    <h3>nfgisf sdfjsdf sj fsjdf sdjf dsj fsdjf sdjf sjfj dsfjs f</h3>
+
+  </div>
+
+  <div
+    class="login-form-wrapper"
+    fxLayout="column">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Login to your account</mat-card-title>
+        <mat-card-subtitle>asdasd asdasd</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="bookingForm" (ngSubmit)="onSubmit($event)" fxLayout="column">
+
+          <mat-form-field>
+            <mat-label>
+              Your Email ID
+            </mat-label>
+            <input type="text" matInput formControlName="email">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>
+              Your Password
+            </mat-label>
+
+            <input type="password" matInput formControlName="password">
+          </mat-form-field>
+
+
+          <mat-label>
+            Sign Up?
+          </mat-label>
+          <mat-slide-toggle (change)="changeFormType($event)"></mat-slide-toggle>
+
+          <mat-label><button (click)="passwordReset()">Forgot your password?</button> </mat-label>
+
+
+          <button *ngIf="forLogin" mat-raised-button type="submit">Login</button>
+          <button *ngIf="!forLogin" mat-raised-button type="submit">Sign Up</button>
+
+        </form>
+
+      </mat-card-content>
+      <mat-card-footer>
+          <mat-card-actions>
+          <button mat-button (click)="authWithGoogle()">Login with Google </button>
+          <button mat-button (click)="authWithMicrosoft()">Login with Microsoft</button>
+        </mat-card-actions>
+      </mat-card-footer>
+    </mat-card>
+  </div>
 
 </div>
