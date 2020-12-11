@@ -22,44 +22,71 @@
     fxLayout="column">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Login to your account</mat-card-title>
-        <mat-card-subtitle>asdasd asdasd</mat-card-subtitle>
+        <mat-card-title *ngIf="selectedIndexForTabs === 0">Login to your account</mat-card-title>
+        <mat-card-title *ngIf="selectedIndexForTabs === 1">Create a new account</mat-card-title>
+        <mat-card-subtitle>any suitable subtitle if we can think of one</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <form [formGroup]="bookingForm" (ngSubmit)="onSubmit($event)" fxLayout="column">
+        <mat-tab-group [(selectedIndex)]="selectedIndexForTabs" mat-align-tabs="center" dynamicHeight>
 
-          <mat-form-field>
-            <mat-label>
-              Your Email ID
-            </mat-label>
-            <input type="text" matInput formControlName="email">
-          </mat-form-field>
+          <mat-tab label="Login">
 
-          <mat-form-field>
-            <mat-label>
-              Your Password
-            </mat-label>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)" fxLayout="column">
 
-            <input type="password" matInput formControlName="password">
-          </mat-form-field>
+              <mat-form-field>
+                <mat-label>
+                  Your Email ID
+                </mat-label>
+                <input type="text" matInput formControlName="email">
+              </mat-form-field>
 
+              <mat-form-field>
+                <mat-label>
+                  Your Password
+                </mat-label>
 
-          <mat-label>
-            Sign Up?
-          </mat-label>
-          <mat-slide-toggle (change)="changeFormType($event)"></mat-slide-toggle>
+                <input type="password" matInput formControlName="password">
+              </mat-form-field>
 
-          <mat-label><button (click)="passwordReset()">Forgot your password?</button> </mat-label>
+              <mat-label><button mat-button color="warn" (click)="passwordReset()">Forgot your password?</button> </mat-label>
 
 
-          <button *ngIf="forLogin" mat-raised-button type="submit">Login</button>
-          <button *ngIf="!forLogin" mat-raised-button type="submit">Sign Up</button>
+              <button mat-raised-button type="submit" color="primary">Login</button>
 
-        </form>
+            </form>
+
+          </mat-tab>
+
+          <mat-tab label="register">
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmitForSignUp($event)" fxLayout="column">
+
+              <mat-form-field>
+                <mat-label>
+                  Your Email ID
+                </mat-label>
+                <input type="text" matInput formControlName="email">
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>
+                  Your Password
+                </mat-label>
+                <mat-hint>Your password should contain at least one uppercase character</mat-hint>
+
+                <input type="password" matInput formControlName="password">
+              </mat-form-field>
+              <button mat-raised-button type="submit" color="accent">Sign Up</button>
+
+            </form>
+
+          </mat-tab>
+
+        </mat-tab-group>
 
       </mat-card-content>
       <mat-card-footer>
-          <mat-card-actions>
+          <mat-card-actions fxLayoutAlign="center center">
           <button mat-button (click)="authWithGoogle()">Login with Google </button>
           <button mat-button (click)="authWithMicrosoft()">Login with Microsoft</button>
         </mat-card-actions>
