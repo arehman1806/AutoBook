@@ -148,7 +148,7 @@ def select_activity(activity_name: str):
   return True, 'Activity Selected'
 
 
-def select_date(day_x, month_x):                                                                 
+def select_date(day_x, month_x):
   months_to_num = {
     'january': 1,
     'february': 2,
@@ -239,4 +239,7 @@ def confirm_booking():
 
 
 def logout():
-  return null
+  return None
+
+def make_new_booking(username, password, dateTime):
+  return None

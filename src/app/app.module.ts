@@ -29,6 +29,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
     MatToolbarModule,
     MatMenuModule,
     MatListModule, MatIconModule,
-    MatSlideToggleModule, FlexLayoutModule
+    MatSlideToggleModule, FlexLayoutModule,
+    MatTabsModule
   ],
   exports: [
     MatFormFieldModule,

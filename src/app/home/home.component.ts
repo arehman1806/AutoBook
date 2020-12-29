@@ -12,8 +12,9 @@ import {MatSlideToggleChange} from '@angular/material/slide-toggle';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public bookingForm: FormGroup;
+  public loginForm: FormGroup;
   public forLogin = true;
+  public selectedIndexForTabs = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.bookingForm = this.fb.group({
+    this.loginForm = this.fb.group({
       email: [''],
       password: ['']
     });
@@ -30,8 +31,8 @@ export class HomeComponent implements OnInit {
 
 
   onSubmit($event: Event): void {
-    const email = this.bookingForm.value.email;
-    const password = this.bookingForm.value.password;
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
     if (this.forLogin) {
       this.auth.loginWithEmailAndPassword(email, password).then(
         x => {
@@ -41,17 +42,23 @@ export class HomeComponent implements OnInit {
         window.alert(x.message);
       });
     }
-    else {
-      this.auth.signUpWithEmailAndPassword(email, password).then(
-        x => {
-          this.router.navigate(['booking', 'main'])
-        }
-      ).catch(
-        x => {
-          window.alert(x.message);
-        }
-      )
-    }
+  }
+
+
+  // tslint:disable-next-line:typedef
+  onSubmitForSignUp($event: any) {
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
+
+    this.auth.signUpWithEmailAndPassword(email, password).then(
+      x => {
+        this.router.navigate(['booking', 'main'])
+      }
+    ).catch(
+      x => {
+        window.alert(x.message);
+      }
+    );
   }
 
   authWithGoogle(): void {
@@ -75,8 +82,9 @@ export class HomeComponent implements OnInit {
     this.forLogin = !$event.checked;
   }
 
+  // tslint:disable-next-line:typedef
   passwordReset() {
-    this.auth.sendPasswordResetEmail(this.bookingForm.getRawValue().email).then(
+    this.auth.sendPasswordResetEmail(this.loginForm.getRawValue().email).then(
       x => {
         window.alert('Verification email has been sent. You might wish to check your spam folder')
       }

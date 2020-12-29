@@ -26,7 +26,5 @@ export class AppComponent {
               private breakpointObserver: BreakpointObserver,
               public auth: AuthService) {
   }
-
-
 }
 

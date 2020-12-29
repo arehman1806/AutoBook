@@ -46,11 +46,25 @@ def fetch_bookings_by_date(platform_id: str, date):
   for user in users:
     userID = user.to_dict()['uid']
     bookingsRef = 'users/' + userID + '/bookings'
-    bookings = firestore_client.collection(bookingsRef).where(u'StartTime', u'<=', date).where(u'platformID', u'==', platform_id).where(u'status', u'==', 'pending').stream()
+    bookings = firestore_client.collection(bookingsRef).where(u'StartTime', u'<=', date).where(u'platformID', u'==',
+                                                                                               platform_id).where(
+      u'status', u'==', 'pending').stream()
     for booking in bookings:
       bookings_fetched.append(booking.to_dict())
   return bookings_fetched
 
 
-# if __name__ == '__main__':
+# method takes in:
+# userID: string
+# booking_ID: string - might be called doc_ID elsewhere
+# status to update: string - success, *add others here * //TODO
+def update_scheduler_result(userID, booking_ID, status):
+  user_ref = f'users/{userID}'
+  doc_ref = user_ref + f'/bookings/{booking_ID}'
+  status_to_update = {'status': status}
+  firestore_client.document(doc_ref).update(status_to_update)
+
+
+if __name__ == '__main__':
+  update_scheduler_result('SnTwkMRinBZaTKP8m0XljALRGbz1', '1606684151165', 'success')
 #   fetch_bookings_by_date('pl-1', DatetimeWithNanoseconds.now())
