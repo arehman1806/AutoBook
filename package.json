@@ -29,6 +29,7 @@
     "@syncfusion/ej2-angular-dropdowns": "^18.3.47",
     "@syncfusion/ej2-angular-schedule": "^18.3.44",
     "@syncfusion/ej2-material-theme": "~18.3.42",
+    "compression": "^1.7.4",
     "express": "^4.17.1",
     "firebase": "^8.0.0",
     "path": "^0.12.7",
