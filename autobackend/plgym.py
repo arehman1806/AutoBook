@@ -39,7 +39,7 @@ def json_parse_and_run(booking_data_json):
     print("schedule booking")
 
 
-  # booking(day, month, time_input, site_name, activity_name, 'wrong_test', 'test')
+  booking(day, month, time_input, site_name, activity_name, 'wrong_test', 'test')
 
 
 def booking(day, month, time_input, site, activity, user_id, user_password):
