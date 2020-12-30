@@ -29,6 +29,7 @@
     "@syncfusion/ej2-angular-schedule": "^18.3.44",
     "@syncfusion/ej2-material-theme": "~18.3.42",
     "firebase": "^8.0.0",
+    "material-bottom-nav": "^1.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.3",
     "zone.js": "~0.10.2"

@@ -1,3 +1,10 @@
+@import '~material-bottom-nav/bottom-nav';
+
+
+.bottom-nav {
+  @include bottom-nav($background-color: #000051, $active-color: #FFFFFF, $inactive-color: #E0E0E0, $hide-inactive-labels: false);
+}
+
 .sidenav-container {
   min-height: 100%;
 }
