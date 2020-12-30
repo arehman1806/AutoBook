@@ -1,6 +1,8 @@
 # AutoBook.Me
 Angular front-end
 
+
+git remote set-url origin https://github.com/mnm-matin/AutoBook.git
 ###WHATS NEW:
 
 - you can now delete events. This functionality works only on events created after this commit.

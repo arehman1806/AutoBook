@@ -19,8 +19,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private auth: AuthService,
-    private router: Router) { }
+    public auth: AuthService,
+    private router: Router,) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({

@@ -38,7 +38,7 @@ L10n.load({
 
 @Component({
   selector: 'app-new-booking',
-  template: `<ejs-schedule #scheduleObj height="850" width="1250" [eventSettings] = "eventObject" [currentView] = "setView" [showQuickInfo]='showQuickInfo'  (popupOpen)='onPopupOpen($event)' (eventRendered)='eventRendered($event)'>
+  template: `<ejs-schedule #scheduleObj width="100%" [eventSettings] = "eventObject" [currentView] = "setView" [showQuickInfo]='showQuickInfo'  (popupOpen)='onPopupOpen($event)' (eventRendered)='eventRendered($event)'>
 
     <ng-template #editorTemplate let-data>
       <table class="custom-event-editor" width="100%" cellpadding="5">
