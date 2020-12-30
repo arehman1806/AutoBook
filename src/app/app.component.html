@@ -47,14 +47,24 @@
       <span class="flex-spacer"></span>
 
       <div>
-        <a mat-raised-button class="custom-background-secondary" routerLink="/login" style="margin-right: 1rem">
+        <button
+          *ngIf="!(this.auth.isLoggedIn$ | async)"
+          mat-raised-button class="custom-background-secondary" routerLink="/login" style="margin-right: 1rem">
           <mat-icon style="margin-right: 0.4em">login</mat-icon>
           Login
-        </a>
-        <a mat-raised-button class="custom-background-secondary" routerLink="/register">
+        </button>
+        <button
+          *ngIf="!(this.auth.isLoggedIn$ | async)"
+          mat-raised-button class="custom-background-secondary" routerLink="/register">
           <mat-icon style="margin-right: 0.4em">assignment</mat-icon>
           Register
-        </a>
+        </button>
+        <button
+          *ngIf="(this.auth.isLoggedIn$ | async)"
+          mat-raised-button class="custom-background-secondary" (click)="auth.signOut()">
+          <mat-icon style="margin-right: 0.4em">exit_to_app</mat-icon>
+          Logout
+        </button>
       </div>
     </mat-toolbar>
 
@@ -66,8 +76,22 @@
       </a>
       <span class="flex-spacer"></span>
       <div>
-        <button mat-raised-button class="custom-background-secondary" (click)="auth.signOut()">
-          <mat-icon style="margin-right: 0.4em">exit</mat-icon>
+        <button
+          *ngIf="!(this.auth.isLoggedIn$ | async)"
+          mat-raised-button class="custom-background-secondary" routerLink="/login" style="margin-right: 1rem">
+          <mat-icon style="margin-right: 0.4em">login</mat-icon>
+          Login
+        </button>
+        <button
+          *ngIf="!(this.auth.isLoggedIn$ | async)"
+          mat-raised-button class="custom-background-secondary" routerLink="/register">
+          <mat-icon style="margin-right: 0.4em">assignment</mat-icon>
+          Register
+        </button>
+        <button
+          *ngIf="(this.auth.isLoggedIn$ | async)"
+          mat-raised-button class="custom-background-secondary" (click)="auth.signOut()">
+          <mat-icon style="margin-right: 0.4em">exit_to_app</mat-icon>
           Logout
         </button>
       </div>

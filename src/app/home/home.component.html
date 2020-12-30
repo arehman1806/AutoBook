@@ -21,7 +21,8 @@
   <div
     class="login-form-wrapper"
     fxLayout="column">
-    <mat-card>
+    <mat-card
+      *ngIf="!(this.auth.isLoggedIn$ | async)">
       <mat-card-header>
         <mat-card-title *ngIf="selectedIndexForTabs === 0">Login to your account</mat-card-title>
         <mat-card-title *ngIf="selectedIndexForTabs === 1">Create a new account</mat-card-title>

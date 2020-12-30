@@ -8,6 +8,7 @@ import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import firebase from 'firebase';
 import UserCredential = firebase.auth.UserCredential;
+import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +19,14 @@ export class AuthService {
     map((resp) => {
       if (resp) {return resp.uid; }
     })
+  );
+  isLoggedIn$: Observable<boolean> = this.user$.pipe(
+    map(
+      (resp) => {
+        console.log(`reponse from afauth service: ${!!resp}`);
+        return !!resp;
+      }
+    )
   );
 
   constructor(private afAuth: AngularFireAuth,
